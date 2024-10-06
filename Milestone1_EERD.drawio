@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36" version="24.7.17">
   <diagram id="R2lEEEUBdFMjLlhIrx00" name="Page-1">
-    <mxGraphModel dx="909" dy="610" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
+    <mxGraphModel dx="1060" dy="711" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -490,19 +490,16 @@
         <mxCell id="cCIsjWrqllOPOkXVM5NC-33" value="credit date" style="ellipse;whiteSpace=wrap;html=1;align=center;aspect=fixed;" parent="1" vertex="1">
           <mxGeometry x="647" y="750" width="85" height="34" as="geometry" />
         </mxCell>
-        <mxCell id="cCIsjWrqllOPOkXVM5NC-34" value="cashback amount" style="ellipse;whiteSpace=wrap;html=1;align=center;aspect=fixed;" parent="1" vertex="1">
-          <mxGeometry x="531.5" y="762.5" width="85" height="34" as="geometry" />
-        </mxCell>
         <mxCell id="cCIsjWrqllOPOkXVM5NC-36" value="" style="endArrow=none;html=1;rounded=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="cCIsjWrqllOPOkXVM5NC-101" target="cCIsjWrqllOPOkXVM5NC-3" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="647" y="692.5" as="sourcePoint" />
             <mxPoint x="570" y="720" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="cCIsjWrqllOPOkXVM5NC-38" value="" style="endArrow=none;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="cCIsjWrqllOPOkXVM5NC-3" target="cCIsjWrqllOPOkXVM5NC-34" edge="1">
+        <mxCell id="cCIsjWrqllOPOkXVM5NC-38" value="" style="endArrow=none;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="cCIsjWrqllOPOkXVM5NC-3" target="-2w_xy_VzHm7OLdxbyD0-16" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="411.5" y="682.5" as="sourcePoint" />
-            <mxPoint x="571.5" y="682.5" as="targetPoint" />
+            <mxPoint x="574" y="762.5" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="cCIsjWrqllOPOkXVM5NC-39" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0;entryDx=0;entryDy=0;exitX=1;exitY=1;exitDx=0;exitDy=0;" parent="1" source="cCIsjWrqllOPOkXVM5NC-3" target="cCIsjWrqllOPOkXVM5NC-33" edge="1">
@@ -683,7 +680,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="cCIsjWrqllOPOkXVM5NC-100" value="points group ID" style="ellipse;whiteSpace=wrap;html=1;align=center;aspect=fixed;fontStyle=4" parent="1" vertex="1">
-          <mxGeometry x="1.5" y="742.5" width="85" height="34" as="geometry" />
+          <mxGeometry x="10" y="736.5" width="85" height="34" as="geometry" />
         </mxCell>
         <mxCell id="cCIsjWrqllOPOkXVM5NC-101" value="cashback ID" style="ellipse;whiteSpace=wrap;html=1;align=center;aspect=fixed;fontStyle=4" parent="1" vertex="1">
           <mxGeometry x="656" y="702.5" width="85" height="34" as="geometry" />
@@ -1005,6 +1002,9 @@
             <mxPoint x="650" y="670" as="sourcePoint" />
             <mxPoint x="750" y="570" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="-2w_xy_VzHm7OLdxbyD0-16" value="cashback amount" style="ellipse;whiteSpace=wrap;html=1;align=center;dashed=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="528.5" y="762.5" width="85" height="34" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
