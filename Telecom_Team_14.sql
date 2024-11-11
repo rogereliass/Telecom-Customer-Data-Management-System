@@ -16,6 +16,7 @@ As
 		PRIMARY KEY (nationalID) 
 	);
 
+
 	Create table Customer_Account (
 		mobileNo char(11), 
 		pass varchar(50),
@@ -31,6 +32,7 @@ As
 		CHECK(status in ('Active', 'OnHold'))
 	);
 
+
 	Create Table Service_Plan (
 		planID int identity(1,1), 
 		SMS_offered int, 
@@ -42,6 +44,7 @@ As
 		PRIMARY KEY(planID)
 	);
 
+
 	Create Table Subscription (
 		mobileNo char(11), 
 		planID int, 
@@ -52,6 +55,7 @@ As
 		FOREIGN KEY (planID) REFERENCES Service_Plan ON DELETE CASCADE ON UPDATE CASCADE,
 		CHECK(status in ('Active', 'OnHold'))
 	);
+
 
 	Create Table Plan_Usage (
 		usageID int identity(1,1), 
@@ -66,6 +70,7 @@ As
 		FOREIGN KEY (mobileNo) REFERENCES Customer_Account ON DELETE CASCADE ON UPDATE CASCADE,
 		FOREIGN KEY (planID) REFERENCES Service_Plan ON DELETE CASCADE ON UPDATE CASCADE
 	);
+
 
 	Create Table Payment (
 		paymentID int identity(1,1), 
@@ -117,6 +122,8 @@ As
 	END;
 	--***********************************************************
 	GO
+
+
 	Create Table Wallet (
 		walletID int identity(1,1), 
 		current_balance decimal(10,2), 
@@ -126,6 +133,7 @@ As
 		PRIMARY KEY (walletID),
 		FOREIGN KEY (nationalID) REFERENCES Customer_Profile ON DELETE CASCADE ON UPDATE CASCADE
 	);
+
 
 	Create Table Transfer_money (
 		walletID1 int, 
@@ -138,6 +146,7 @@ As
 		FOREIGN KEY (walletID2) REFERENCES Wallet ON DELETE CASCADE ON UPDATE CASCADE
 	);
 
+
 	Create Table Benefits (
 		benefitID int identity(1,1), 
 		description Varchar(50), 
@@ -149,6 +158,7 @@ As
 		CHECK(status in ('Active', 'Expired'))
 	);
 
+
 	Create Table Points_Group (
 		pointID int identity(1,1), 
 		benefitID int, 
@@ -159,6 +169,7 @@ As
 		FOREIGN KEY (PaymentID) REFERENCES Payment ON DELETE CASCADE ON UPDATE CASCADE
 	);
 
+
 	Create Table Exclusive_Offer (
 		offerID int identity(1,1), 
 		benefitID int, 
@@ -168,6 +179,7 @@ As
 		PRIMARY KEY(offerID,benefitID),
 		FOREIGN KEY (benefitID) REFERENCES Benefits ON DELETE CASCADE ON UPDATE CASCADE
 	);
+
 
 	Create Table Cashback (
 		CashbackID int identity(1,1), 
@@ -181,6 +193,7 @@ As
 		--TODO: Cashback as 10% from payment amount
 	);
 
+
 	Create Table Plan_Provides_Benefits (
 		benefitID int, 
 		planID int
@@ -189,12 +202,14 @@ As
 		FOREIGN KEY (planID) REFERENCES Service_Plan ON DELETE CASCADE ON UPDATE CASCADE,
 	);
 
+
 	Create Table Shop (
 		shopID int identity(1,1), 
 		name varchar(50), 
 		category varchar(50)
 		PRIMARY KEY(shopID)
 	);
+
 
 	Create Table Physical_Shop (
 		shopID int, 
@@ -204,6 +219,7 @@ As
 		FOREIGN KEY (shopID) REFERENCES Shop ON DELETE CASCADE ON UPDATE CASCADE,
 	);
 
+
 	Create Table E_shop (
 		shopID int, 
 		URL varchar(50), 
@@ -211,6 +227,7 @@ As
 		PRIMARY KEY(shopID),
 		FOREIGN KEY (shopID) REFERENCES Shop ON DELETE CASCADE ON UPDATE CASCADE,
 	);
+
 
 	Create Table Voucher (
 		voucherID int identity(1,1), 
@@ -224,6 +241,7 @@ As
 		FOREIGN KEY (mobileNo) REFERENCES Customer_Account ON DELETE CASCADE ON UPDATE CASCADE,
 		FOREIGN KEY (shopID) REFERENCES Shop ON DELETE CASCADE ON UPDATE CASCADE
 	);
+
 
 	Create Table Technical_Support_Ticket (
 		ticketID int identity(1,1), 
@@ -322,3 +340,211 @@ GO
 
 ---------------------------------------- 2.2 -------------------------------------
 
+---------------------------------------- 2.2a -------------------------------------
+
+
+
+---------------------------------------- 2.2b -------------------------------------
+
+
+
+---------------------------------------- 2.2c -------------------------------------
+
+
+
+---------------------------------------- 2.2d -------------------------------------
+
+
+
+---------------------------------------- 2.2e -------------------------------------
+
+
+
+---------------------------------------- 2.2f -------------------------------------
+
+
+
+---------------------------------------- 2.2g -------------------------------------
+
+
+
+---------------------------------------- 2.2h -------------------------------------
+
+
+
+---------------------------------------- 2.2i -------------------------------------
+
+
+
+---------------------------------------- 2.2j -------------------------------------
+
+
+
+
+---------------------------------------- 2.3 ---------------------------------------
+
+---------------------------------------- 2.3a -------------------------------------
+Create PROC Account_Plan
+As
+BEGIN 
+	Select CA.*,SP.*
+	From Customer_Account CA INNER JOIN Subscription S on CA.mobileNo = S.mobileNo 
+		INNER JOIN Service_Plan SP on S.planID=SP.planID 
+	Order by CA.mobileNo;
+END
+-----------------------------------------------------------------------------------
+
+GO
+
+EXEC Account_Plan;
+
+GO
+
+---------------------------------------- 2.3b -------------------------------------
+
+Create Function Account_Plan_date(
+	@Subscription_Date date ,
+	@Plan_id int
+)
+returns Table 
+As
+RETURN (
+	Select CA.mobileNo AS Mobile_Number, 
+			SP.planID AS Plan_ID, 
+			SP.name AS Plan_Name
+	From Customer_Account CA 
+		INNER JOIN Subscription S on CA.mobileNo = S.mobileNo 
+		INNER JOIN Service_Plan SP on S.planID=SP.planID 
+	Where S.subscription_date = @Subscription_Date AND S.planID = @Plan_id
+); 
+GO
+
+---------------------------------------- 2.3c -------------------------------------
+Create Function Account_Usage_Plan(
+	@MobileNo char(11),
+	@from_date date
+)
+returns table 
+As
+RETURN (
+	Select U.plan_ID AS Plan_ID, 
+		SUM(U.data_consumption) AS Total_Data_Consumed,
+        SUM(U.minutes_used) AS Total_Minutes_Used,
+        SUM(U.SMS_sent) AS Total_SMS
+	From Plan_Usage U
+	Where U.mobileNo = @MobileNo AND U.start_date >= @from_date
+);
+GO
+
+---------------------------------------- 2.3d -------------------------------------
+CREATE PROCEDURE Benefits_Account
+    @MobileNo CHAR(11),
+    @PlanID INT
+AS
+BEGIN
+    CREATE TABLE #DeletedBenefits (
+        benefitID INT,
+        description VARCHAR(50),
+        validity_date DATE,
+        status VARCHAR(50)
+    );
+
+    INSERT INTO #DeletedBenefits (benefitID, description, validity_date, status)
+		SELECT b.benefitID, b.description, b.validity_date, b.status
+		FROM Benefits b
+		INNER JOIN Plan_Provides_Benefits ppb ON b.benefitID = ppb.benefitID
+		INNER JOIN Service_Plan sp ON ppb.planID = sp.planID
+		WHERE b.mobileNo = @MobileNo AND ppb.planID = @PlanID;
+
+    DELETE FROM Benefits
+    WHERE mobileNo = @MobileNo
+    AND benefitID IN (
+        SELECT benefitID
+        FROM Plan_Provides_Benefits
+        WHERE planID = @PlanID
+    );
+
+    SELECT * FROM #DeletedBenefits;
+    DROP TABLE #DeletedBenefits;
+END;
+GO
+
+---------------------------------------- 2.3e -------------------------------------
+CREATE FUNCTION Account_SMS_Offers(
+	@MobileNo CHAR(11)
+)
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT eo.offerID, eo.SMS_offered, eo.internet_offered, eo.minutes_offered, b.description
+    FROM Exclusive_Offer eo INNER JOIN Benefits b ON eo.benefitID = b.benefitID
+    WHERE b.mobileNo = @MobileNo
+    AND eo.SMS_offered > 0 --TODO: Include SMS offers or Only SMS Offers?
+);
+GO
+
+---------------------------------------- 2.3f -------------------------------------
+CREATE PROCEDURE Account_Payment_Points
+    @MobileNo CHAR(11)
+AS
+BEGIN
+    DECLARE @TotalTransactions INT;
+    DECLARE @TotalPoints INT;
+
+    SELECT @TotalTransactions = COUNT(*)
+    FROM Payment p INNER JOIN Customer_Account ca ON p.mobileNo = ca.mobileNo
+    WHERE p.mobileNo = @MobileNo AND p.status = 'successful'
+    AND p.date_of_payment >= DATEADD(YEAR, -1, GETDATE());
+
+    SELECT @TotalPoints = SUM(ca.point) -- TODO: Check Points calculation method
+    FROM Customer_Account ca
+    WHERE ca.mobileNo = @MobileNo;
+
+    SELECT @TotalTransactions AS Total_Transactions, @TotalPoints AS Total_Points;
+END;
+GO
+
+---------------------------------------- 2.3g -------------------------------------
+CREATE FUNCTION Wallet_Cashback_Amount(
+	@WalletId int, 
+	@planId int
+)
+returns int 
+AS
+BEGIN
+    DECLARE @CashbackAmount int;
+
+    SELECT @CashbackAmount = SUM(c.amount)
+    FROM Cashback c
+    INNER JOIN Benefits b ON c.benefitID = b.benefitID
+    INNER JOIN Plan_Provides_Benefits ppb ON b.benefitID = ppb.benefitID
+    WHERE c.walletID = @WalletId
+    AND ppb.planID = @PlanId; 
+
+    RETURN ISNULL(@CashbackAmount, 0);
+END;
+GO
+
+---------------------------------------- 2.3h -------------------------------------
+CREATE FUNCTION Wallet_Transfer_Amount (
+	@Wallet_id int, 
+	@start_date date, 
+	@end_date date
+)
+returns Decimal(10,2)
+AS
+BEGIN 
+	Declare @Transaction_amount_avg Decimal(10,2);
+
+	SELECT @AvgAmount = AVG(t.amount)
+    FROM Transfer_money t
+    WHERE t.walletID1 = @Wallet_id
+    AND t.transfer_date BETWEEN @Start_date AND @End_date;
+
+    RETURN ISNULL(@AvgAmount, 0);
+
+END;
+GO
+
+---------------------------------------- 2.3i -------------------------------------
