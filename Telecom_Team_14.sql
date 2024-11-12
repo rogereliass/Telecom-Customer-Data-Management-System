@@ -548,3 +548,126 @@ END;
 GO
 
 ---------------------------------------- 2.3i -------------------------------------
+CREATE FUNCTION Wallet_MobileNo(@MobileNo char(11))
+RETURNS BIT
+AS BEGIN
+	DECLARE @IsThisNumberLinked BIT;
+	IF EXISTS (
+		SELECT *
+		FROM Customer_Account CA , Wallet W
+		WHERE CA.nationalID = W.nationalID AND CA.mobileNo=@MobileNo
+	)
+	BEGIN 
+		SET @IsThisNumberLinked = 1;
+	END
+	ELSE
+	BEGIN
+		SET @IsThisNumberLinked = 0;
+	END
+	RETURN @IsThisNumberLinked;
+END;
+GO
+
+---------------------------------------- 2.3j -------------------------------------
+
+---------------------------------------- 2.4 -------------------------------------
+---------------------------------------- 2.4a -------------------------------------
+CREATE FUNCTION AccountLoginValidation(
+@MobileNo char(11),
+@password varchar(50)
+)
+RETURNS BIT
+AS BEGIN
+	DECLARE @Success BIT;
+	IF EXISTS (
+		SELECT *
+		FROM Customer_Account CA 
+		WHERE CA.mobileNo=@MobileNo AND CA.pass=@password
+	)
+	BEGIN 
+		SET @Success = 1;
+	END
+	ELSE
+	BEGIN
+		SET @Success = 0;
+	END
+	RETURN @Success;
+END;
+GO
+
+---------------------------------------- 2.4b -------------------------------------
+CREATE FUNCTION Consumption(
+@Plan_name varchar(50), 
+@start_date date,
+@end_date date
+)
+RETURNS TABLE
+AS 
+RETURN(
+	SELECT SUM(PU.data_consumption) AS Data_Consumption, SUM(PU.minutes_used) AS Minutes_Used, SUM(PU.SMS_sent) AS SMS_Sent
+	FROM PlanUsage PU, Service_Plan SP, Subscription S
+	WHERE PU.mobileNo = S.mobileNo 
+		AND PU.planId = SP.planId
+		AND SP.planId = S.planId
+		AND SP.name = @plan_name
+		AND PU.start_date >= @start_date              
+        AND PU.end_date <= @end_date                    
+        AND S.status = 'Active'
+)
+GO
+
+---------------------------------------- 2.4c -------------------------------------
+CREATE PROCEDURE Unsubscribed_Plans
+@MobileNo CHAR(11)
+AS
+BEGIN
+	SELECT SP.name AS plan_name 
+	FROM Service_Plan SP LEFT JOIN Subscription S ON SP.planId = S.planId AND S.mobileNo = @MobileNo
+	WHERE s.mobileNo IS NULL;
+END;
+GO
+
+---------------------------------------- 2.4d -------------------------------------
+CREATE FUNCTION Usage_Plan_CurrentMonth(@MobileNo char(11))
+RETURNS TABLE
+AS 
+RETURN(
+	SELECT PU.planID, 
+		SUM(pu.data_consumption) AS Data_consumption,   
+        SUM(pu.minutes_used) AS Minutes_used,          
+        SUM(pu.SMS_sent) AS SMS_sent
+	FROM Plan_Usage PU, Subscription S
+	WHERE PU.mobileNo = S.mobileNo 
+		AND PU.planID = S.planID
+		AND S.mobileNo = @MobileNo
+		AND S.status = 'Active'
+		AND MONTH(PU.start_date) = MONTH(CURRENT_TIMESTAMP)
+		AND MONTH(PU.end_date) = MONTH(CURRENT_TIMESTAMP)
+	GROUP BY PU.planId
+)
+GO
+
+---------------------------------------- 2.4e -------------------------------------
+CREATE FUNCTION Cashback_Wallet_Customer(@NationalID int)
+RETURNS TABLE
+AS
+RETURN(
+	SELECT CB.CashbackID, CB.amount AS Cashback_Amount, CB.credit_date
+	FROM Cashback CB, Wallet W
+	WHERE CB.walletID = W.walletID
+		AND W.nationalID = @NationalID
+)
+GO
+
+---------------------------------------- 2.4f -------------------------------------
+CREATE PROCEDURE Ticket_Account_Customer
+@NationalID int,
+@Unresolved_Tickets int OUTPUT
+AS
+BEGIN
+	SELECT @Unresolved_Tickets = COUNT(TST.ticketID)
+	FROM Customer_Account CA, Technical_Support_Ticket TST
+	WHERE CA.mobileNo = TST.mobileNo 
+		AND CA.nationalID = @NationalID
+		AND TST.status <> 'Resolved'
+END;
