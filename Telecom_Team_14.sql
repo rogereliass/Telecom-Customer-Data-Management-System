@@ -341,24 +341,44 @@ GO
 ---------------------------------------- 2.2 -------------------------------------
 
 ---------------------------------------- 2.2a -------------------------------------
-
-
+CREATE VIEW allcustomeraccounts AS
+SELECT *
+FROM Customer_profile P, Customer_Account A
+WHERE status='Active' and A.nationalID = P.nationalID
+GO
 
 ---------------------------------------- 2.2b -------------------------------------
-
-
+CREATE VIEW allServiceplans AS
+SELECT * 
+FROM Service_Plan
+GO
 
 ---------------------------------------- 2.2c -------------------------------------
-
-
+CREATE VIEW allBenifits AS
+SELECT *
+FROM Benifits
+WHERE status= 'Active'
+GO
 
 ---------------------------------------- 2.2d -------------------------------------
-
-
+CREATE VIEW AccountPayments AS
+SELECT *
+FROM Payment P, Customer_Account A
+WHERE P.mobileNo = A.mobileNo
+GO
 
 ---------------------------------------- 2.2e -------------------------------------
-
-
+CREATE VIEW All_Shop_Details AS
+SELECT 
+    s.shopID,
+    s.name AS shop_name,
+    s.category AS shop_category,
+    ps.address AS physical_address,
+    ps.working_hours AS physical_working_hours,
+    es.URL AS e_shop_url,
+    es.rating AS e_shop_rating
+FROM  Shop s LEFT JOIN  Physical_Shop ps ON s.shopID = ps.shopID LEFT JOIN  E_shop es ON s.shopID = es.shopID;
+GO
 
 ---------------------------------------- 2.2f -------------------------------------
 
