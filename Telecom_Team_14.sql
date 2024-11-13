@@ -749,6 +749,8 @@ CREATE FUNCTION Subscribed_plans_5_Months(@MobileNo char(11))
 RETURNS TABLE
 AS 
 RETURN(
-	SELECT 
-	FROM 
-)
+	SELECT P.name
+	FROM Subscription S, Service_Plan P 
+	WHERE S.mobileNo = @MobileNo and S.planID = P.planID and (CURRENT_TIMESTAMP - S.subscription_date)<=5 
+);
+GO
