@@ -555,7 +555,7 @@ CREATE FUNCTION Wallet_Transfer_Amount (
 returns Decimal(10,2)
 AS
 BEGIN 
-	Declare @Transaction_amount_avg Decimal(10,2);
+	Declare @AvgAmount Decimal(10,2);
 
 	SELECT @AvgAmount = AVG(t.amount)
     FROM Transfer_money t
@@ -691,3 +691,64 @@ BEGIN
 		AND CA.nationalID = @NationalID
 		AND TST.status <> 'Resolved'
 END;
+
+GO
+---------------------------------------- 2.4g -------------------------------------
+CREATE PROCEDURE Account_Highest_Voucher 
+@MobileNo CHAR(11),
+@Voucher_id int OUTPUT
+AS 
+BEGIN 
+	SELECT voucherID 
+	FROM Voucher
+	WHERE mobileNo = @MobileNo and value > All(SELECT value 
+												FROM Voucher
+												where mobileNo = @MobileNo)
+END;
+
+GO
+---------------------------------------- 2.4h -------------------------------------
+CREATE FUNCTION Remaining_plan_amount(@MobileNo char(11), @plan_name varchar(50))
+RETURNS DECIMAL(10,1) 
+AS
+BEGIN
+RETURN(
+	SELECT PP.remaining_balance
+	FROM Process_Payment PP, Payment P, Service_Plan S
+	WHERE S.name = @plan_name and PP.planID = S.planID and P.paymentID = PP.paymentID and P.mobileNo = @MobileNo
+)
+END;
+GO
+---------------------------------------- 2.4i -------------------------------------
+CREATE FUNCTION Extra_plan_amount(@MobileNo char(11), @plan_name varchar(50))
+RETURNS DECIMAL(10,1) 
+AS
+BEGIN
+RETURN(
+	SELECT PP.extra_amount
+	FROM Process_Payment PP, Payment P, Service_Plan S
+	WHERE S.name = @plan_name and PP.planID = S.planID and P.paymentID = PP.paymentID and P.mobileNo = @MobileNo
+)
+END;
+GO
+
+---------------------------------------- 2.4j -------------------------------------
+CREATE PROCEDURE Top_Successful_Payments 
+@MobileNo char(11)
+AS 
+BEGIN 
+	SELECT TOP 10 paymentID, mobileNo, amount, status, date_of_payment
+	FROM Payment
+	WHERE mobileNo = @MobileNo and status = 'Successful'
+	ORDER BY amount DESC
+END;
+
+GO
+---------------------------------------- 2.4k -------------------------------------
+CREATE FUNCTION Subscribed_plans_5_Months(@MobileNo char(11))
+RETURNS TABLE
+AS 
+RETURN(
+	SELECT 
+	FROM 
+)
