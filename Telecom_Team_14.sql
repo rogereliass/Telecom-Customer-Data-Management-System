@@ -381,26 +381,77 @@ FROM  Shop s LEFT JOIN  Physical_Shop ps ON s.shopID = ps.shopID LEFT JOIN  E_sh
 GO
 
 ---------------------------------------- 2.2f -------------------------------------
+CREATE VIEW allResolvedTickets AS
+SELECT*
+FROM
+    Technical_Support_Ticket
+WHERE
+    status = 'Resolved';
+GO
+
+
 
 
 
 ---------------------------------------- 2.2g -------------------------------------
 
+CREATE VIEW CustomerWallet AS
+SELECT
+    W.walletID,
+    W.current_balance,
+    W.currency,
+    W.last_modified_date,
+    CP.first_name,
+    CP.last_name
+FROM
+    Wallet W
+INNER JOIN
+    Customer_Profile CP ON W.nationalID = CP.nationalID;
+GO
 
 
 ---------------------------------------- 2.2h -------------------------------------
-
-
+CREATE VIEW E_shopVouchers AS
+SELECT
+    es.shopID,
+    es.URL ,
+    v.voucherID,
+    v.value
+FROM
+    E_shop es
+INNER JOIN
+    Voucher v ON es.shopID = v.shopID
+WHERE
+    v.redeem_date IS NOT NULL;
+GO
 
 ---------------------------------------- 2.2i -------------------------------------
-
-
-
+CREATE VIEW PhysicalStoreVouchers AS
+SELECT
+    ps.shopID,
+    ps.address,
+    ps.working_hours,
+    v.voucherID,
+    v.value
+FROM
+    Physical_Shop ps
+INNER JOIN
+    Voucher v ON ps.shopID = v.shopID
+WHERE
+    v.redeem_date IS NOT NULL;
+GO
 ---------------------------------------- 2.2j -------------------------------------
-
-
-
-
+CREATE VIEW Num_of_cashback AS
+SELECT
+    w.walletID,
+    COUNT(c.CashbackID)
+FROM
+    Wallet w
+LEFT JOIN
+    Cashback c ON w.walletID = c.walletID
+GROUP BY
+    w.walletID;
+GO
 ---------------------------------------- 2.3 ---------------------------------------
 
 ---------------------------------------- 2.3a -------------------------------------
@@ -754,3 +805,41 @@ RETURN(
 	WHERE S.mobileNo = @MobileNo and S.planID = P.planID and (CURRENT_TIMESTAMP - S.subscription_date)<=5 
 );
 GO
+---------------------------------------- 2.4l -------------------------------------
+CREATE PROCEDURE Initiate_plan_payment
+@MobileNo char(11),
+@amount decimal(10,1),
+@payment_method varchar(50),
+@plan_id int
+AS
+BEGIN
+	INSERT INTO Payment VALUES(@amount,CURRENT_TIMESTAMP,@payment_method,'Successful',@MobileNo)
+	INSERT INTO Subscription VALUES(@MobileNo,@plan_id,CURRENT_TIMESTAMP,'Active')
+END
+
+GO
+---------------------------------------- 2.4m -------------------------------------
+
+CREATE PROCEDURE Payment_wallet_cashback 
+@MobileNo char(11),
+@payment_id int,
+@benefit_id int
+AS 
+BEGIN 
+	DECLARE @cashback_calculation DECIMAL(10,2);
+	DECLARE @current_balance DECIMAL(10,2);
+	DECLARE @Wallet_id int;
+	SET @cashback_calculation = 0.1 * (SELECT amount
+										FROM Payment 
+										WHERE mobileNo = @MobileNo and paymentID = @payment_id);
+	SET @Wallet_id = (SELECT walletID
+					FROM Wallet
+					WHERE nationalID = (SELECT nationalID FROM Customer_Account WHERE mobileNo = @MobileNo) )
+
+	SET @current_balance = @cashback_calculation + (SELECT current_balance 
+														FROM Wallet
+														WHERE walletID = @Wallet_id)
+	UPDATE Wallet
+	SET current_balance = @current_balance WHERE walletID = @Wallet_id
+	INSERT INTO Cashback VALUES(@benefit_id,@Wallet_id,@cashback_calculation,CURRENT_TIMESTAMP)
+END;
