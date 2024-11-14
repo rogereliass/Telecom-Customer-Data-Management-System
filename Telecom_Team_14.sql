@@ -96,30 +96,30 @@ As
 		FOREIGN KEY (planID) REFERENCES Service_Plan ON DELETE CASCADE ON UPDATE CASCADE
 	);
 	GO
-	CREATE TRIGGER trg_CalculatePaymentAmounts
-		ON Process_Payment
-		AFTER INSERT
-		AS
-		BEGIN
-			UPDATE PP
-			SET 
-				PP.remaining_balance = CASE 
-					WHEN P.amount < SP.price THEN SP.price - P.amount 
-					ELSE 0 
-				END,
-				PP.extra_amount = CASE 
-					WHEN P.amount > SP.price THEN P.amount - SP.price 
-					ELSE 0 
-				END
-			FROM 
-				Process_Payment PP
-			JOIN 
-				inserted I ON PP.paymentID = I.paymentID
-			JOIN 
-				Payment P ON I.paymentID = P.paymentID
-			JOIN 
-				Service_Plan SP ON I.planID = SP.planID;
-	END;
+	--CREATE TRIGGER trg_CalculatePaymentAmounts
+	--	ON Process_Payment
+	--	AFTER INSERT
+	--	AS
+	--	BEGIN
+	--		UPDATE PP
+	--		SET 
+	--			PP.remaining_balance = CASE 
+	--				WHEN P.amount < SP.price THEN SP.price - P.amount 
+	--				ELSE 0 
+	--			END,
+	--			PP.extra_amount = CASE 
+	--				WHEN P.amount > SP.price THEN P.amount - SP.price 
+	--				ELSE 0 
+	--			END
+	--		FROM 
+	--			Process_Payment PP
+	--		JOIN 
+	--			inserted I ON PP.paymentID = I.paymentID
+	--		JOIN 
+	--			Payment P ON I.paymentID = P.paymentID
+	--		JOIN 
+	--			Service_Plan SP ON I.planID = SP.planID;
+	--END;
 	--***********************************************************
 	GO
 
@@ -354,9 +354,9 @@ FROM Service_Plan
 GO
 
 ---------------------------------------- 2.2c -------------------------------------
-CREATE VIEW allBenifits AS
+CREATE VIEW allBenefits AS
 SELECT *
-FROM Benifits
+FROM Benefits
 WHERE status= 'Active'
 GO
 
@@ -406,7 +406,7 @@ SELECT
 FROM
     Wallet W
 INNER JOIN
-    Customer_Profile CP ON W.nationalID = CP.nationalID;
+    Customer_profile CP ON W.nationalID = CP.nationalID;
 GO
 
 
@@ -814,7 +814,8 @@ CREATE PROCEDURE Initiate_plan_payment
 AS
 BEGIN
 	INSERT INTO Payment VALUES(@amount,CURRENT_TIMESTAMP,@payment_method,'Successful',@MobileNo)
-	INSERT INTO Subscription VALUES(@MobileNo,@plan_id,CURRENT_TIMESTAMP,'Active')
+	UPDATE Subscription 
+	SET status = 'Active' WHERE mobileNo = @MobileNo and planID = @plan_id
 END
 
 GO
