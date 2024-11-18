@@ -96,30 +96,30 @@ As
 		FOREIGN KEY (planID) REFERENCES Service_Plan ON DELETE CASCADE ON UPDATE CASCADE
 	);
 	GO
-	--CREATE TRIGGER trg_CalculatePaymentAmounts
-	--	ON Process_Payment
-	--	AFTER INSERT
-	--	AS
-	--	BEGIN
-	--		UPDATE PP
-	--		SET 
-	--			PP.remaining_balance = CASE 
-	--				WHEN P.amount < SP.price THEN SP.price - P.amount 
-	--				ELSE 0 
-	--			END,
-	--			PP.extra_amount = CASE 
-	--				WHEN P.amount > SP.price THEN P.amount - SP.price 
-	--				ELSE 0 
-	--			END
-	--		FROM 
-	--			Process_Payment PP
-	--		JOIN 
-	--			inserted I ON PP.paymentID = I.paymentID
-	--		JOIN 
-	--			Payment P ON I.paymentID = P.paymentID
-	--		JOIN 
-	--			Service_Plan SP ON I.planID = SP.planID;
-	--END;
+	CREATE TRIGGER trg_CalculatePaymentAmounts
+		ON Process_Payment
+		AFTER INSERT
+		AS
+		BEGIN
+			UPDATE PP
+			SET 
+				PP.remaining_balance = CASE 
+					WHEN P.amount < SP.price THEN SP.price - P.amount 
+					ELSE 0 
+				END,
+				PP.extra_amount = CASE 
+					WHEN P.amount > SP.price THEN P.amount - SP.price 
+					ELSE 0 
+				END
+			FROM 
+				Process_Payment PP
+			JOIN 
+				inserted I ON PP.paymentID = I.paymentID
+			JOIN 
+				Payment P ON I.paymentID = P.paymentID
+			JOIN 
+				Service_Plan SP ON I.planID = SP.planID;
+	END;
 	--***********************************************************
 	GO
 
