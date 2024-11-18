@@ -341,14 +341,14 @@ GO
 ---------------------------------------- 2.2 -------------------------------------
 
 ---------------------------------------- 2.2a -------------------------------------
-CREATE VIEW allcustomeraccounts AS
+CREATE VIEW allCustomerAccounts AS
 SELECT *
 FROM Customer_profile P, Customer_Account A
 WHERE status='Active' and A.nationalID = P.nationalID
 GO
 
 ---------------------------------------- 2.2b -------------------------------------
-CREATE VIEW allServiceplans AS
+CREATE VIEW allServicePlans AS
 SELECT * 
 FROM Service_Plan
 GO
@@ -368,7 +368,7 @@ WHERE P.mobileNo = A.mobileNo
 GO
 
 ---------------------------------------- 2.2e -------------------------------------
-CREATE VIEW All_Shop_Details AS
+CREATE VIEW All_Shops AS
 SELECT 
     s.shopID,
     s.name AS shop_name,
@@ -568,9 +568,9 @@ BEGIN
     WHERE p.mobileNo = @MobileNo AND p.status = 'successful'
     AND p.date_of_payment >= DATEADD(YEAR, -1, GETDATE());
 
-    SELECT @TotalPoints = SUM(ca.point) -- TODO: Check Points calculation method
-    FROM Customer_Account ca
-    WHERE ca.mobileNo = @MobileNo;
+    SELECT @TotalPoints = SUM(pg.pointsAmount) -- TODO: Check Points calculation method
+    FROM Points_Group pg, Payment p
+    WHERE p.mobileNo = @MobileNo and p.paymentID = pg.PaymentID and p.date_of_payment >= DATEADD(YEAR, -1, GETDATE()) ;
 
     SELECT @TotalTransactions AS Total_Transactions, @TotalPoints AS Total_Points;
 END;
@@ -843,4 +843,29 @@ BEGIN
 	UPDATE Wallet
 	SET current_balance = @current_balance WHERE walletID = @Wallet_id
 	INSERT INTO Cashback VALUES(@benefit_id,@Wallet_id,@cashback_calculation,CURRENT_TIMESTAMP)
+END;
+GO
+---------------------------------------- 2.4n -------------------------------------
+CREATE PROCEDURE Initiate_balance_payment
+@MobileNo char(11) ,
+@amount decimal(10,1), 
+@payment_method varchar(50)
+AS
+BEGIN 
+	DECLARE @Wallet_id int;
+	INSERT INTO Payment Values(@amount,CURRENT_TIMESTAMP,@payment_method,'Successful',@MobileNo)
+	SET @Wallet_id = (SELECT walletID
+					FROM Wallet
+					WHERE nationalID = (SELECT nationalID FROM Customer_Account WHERE mobileNo = @MobileNo) )
+	UPDATE Wallet
+	SET current_balance = current_balance + @amount, last_modified_date = CURRENT_TIMESTAMP
+	WHERE walletID = @Wallet_id
+END;
+---------------------------------------- 2.4o -------------------------------------
+CREATE PROCEDURE Redeem_voucher_points
+@MobileNo char(11),
+@voucher_id int
+AS 
+BEGIN
+
 END;
