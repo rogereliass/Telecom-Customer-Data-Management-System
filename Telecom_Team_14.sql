@@ -647,7 +647,7 @@ BEGIN
 	UPDATE Customer_Account 
 	SET point = (SELECT SUM(PG.pointsAmount) AS TotalPointsAmount
 	FROM Benefits B, Points_Group PG, Customer_Account CA
-	WHERE B.mobileNo = CA.mobileNo AND B.benefitID = P.benefitID AND CA.mobileNo = @MobileNo)
+	WHERE B.mobileNo = CA.mobileNo AND B.benefitID = PG.benefitID AND CA.mobileNo = @MobileNo)
 	WHERE mobileNo = @MobileNo
 END;
 GO
