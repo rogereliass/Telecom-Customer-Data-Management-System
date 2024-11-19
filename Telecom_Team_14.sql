@@ -2,7 +2,6 @@
 USE Telecom_Team_14;
 
 Go
-
 ---------------------------------------- 2.1a -------------------------------------
 CREATE PROC createAllTables
 As
@@ -85,43 +84,17 @@ As
 		CHECK(status in ('Successful', 'Pending', 'Rejected'))
 	);
 
-	--***********************************************************
-	Create Table Process_Payment (
+
+	Create Table Process_Payment ( --TODO: FUNCTIONS NOT ACCEPTED BY MSSQL
 		paymentID int, 
 		planID int, 
-		remaining_balance DECIMAL(10,1) default 0 , --value to be calculated by triger
-		extra_amount DECIMAL(10,1) default 0, --value to be calculated by triger
+		remaining_balance DECIMAL(10,1), --default dbo.CalculateRemainingBalance(paymentID, planID),
+		extra_amount DECIMAL(10,1), --default dbo.CalculateExtraAmount(paymentID, planID),
 		PRIMARY KEY (paymentID),
 		FOREIGN KEY (paymentID) REFERENCES Payment ON DELETE CASCADE ON UPDATE CASCADE,
 		FOREIGN KEY (planID) REFERENCES Service_Plan ON DELETE CASCADE ON UPDATE CASCADE
 	);
-	GO
-	CREATE TRIGGER trg_CalculatePaymentAmounts
-		ON Process_Payment
-		AFTER INSERT
-		AS
-		BEGIN
-			UPDATE PP
-			SET 
-				PP.remaining_balance = CASE 
-					WHEN P.amount < SP.price THEN SP.price - P.amount 
-					ELSE 0 
-				END,
-				PP.extra_amount = CASE 
-					WHEN P.amount > SP.price THEN P.amount - SP.price 
-					ELSE 0 
-				END
-			FROM 
-				Process_Payment PP
-			JOIN 
-				inserted I ON PP.paymentID = I.paymentID
-			JOIN 
-				Payment P ON I.paymentID = P.paymentID
-			JOIN 
-				Service_Plan SP ON I.planID = SP.planID;
-	END;
-	--***********************************************************
-	GO
+	
 
 
 	Create Table Wallet (
@@ -129,9 +102,9 @@ As
 		current_balance decimal(10,2), 
 		currency Varchar(50), 
 		last_modified_date date, 
-		nationalID int
+		nationalID int,
 		PRIMARY KEY (walletID),
-		FOREIGN KEY (nationalID) REFERENCES Customer_Profile ON DELETE CASCADE ON UPDATE CASCADE
+		FOREIGN KEY (nationalID) REFERENCES Customer_profile(nationalID) ON DELETE CASCADE ON UPDATE CASCADE
 	);
 
 
@@ -142,8 +115,8 @@ As
 		amount decimal(10,2),
 		transfer_date date,
 		PRIMARY KEY(walletID1,walletID2,transfer_id),
-		FOREIGN KEY (walletID1) REFERENCES Wallet ON DELETE CASCADE ON UPDATE CASCADE,
-		FOREIGN KEY (walletID2) REFERENCES Wallet ON DELETE CASCADE ON UPDATE CASCADE
+		FOREIGN KEY (walletID1) REFERENCES Wallet,
+		FOREIGN KEY (walletID2) REFERENCES Wallet
 	);
 
 
@@ -165,8 +138,8 @@ As
 		pointsAmount int, 
 		PaymentID int,
 		PRIMARY KEY(pointID,benefitID),
-		FOREIGN KEY (benefitID) REFERENCES Benefits ON DELETE CASCADE ON UPDATE CASCADE,
-		FOREIGN KEY (PaymentID) REFERENCES Payment ON DELETE CASCADE ON UPDATE CASCADE
+		FOREIGN KEY (benefitID) REFERENCES Benefits ,
+		FOREIGN KEY (PaymentID) REFERENCES Payment 
 	);
 
 
@@ -177,7 +150,7 @@ As
 		SMS_offered int,
 		minutes_offered int,
 		PRIMARY KEY(offerID,benefitID),
-		FOREIGN KEY (benefitID) REFERENCES Benefits ON DELETE CASCADE ON UPDATE CASCADE
+		FOREIGN KEY (benefitID) REFERENCES Benefits
 	);
 
 
@@ -188,8 +161,8 @@ As
 		amount int, 
 		credit_date date,
 		PRIMARY KEY(CashbackID,benefitID),
-		FOREIGN KEY (benefitID) REFERENCES Benefits ON DELETE CASCADE ON UPDATE CASCADE,
-		FOREIGN KEY (walletID) REFERENCES Wallet ON DELETE CASCADE ON UPDATE CASCADE
+		FOREIGN KEY (benefitID) REFERENCES Benefits,
+		FOREIGN KEY (walletID) REFERENCES Wallet
 		--TODO: Cashback as 10% from payment amount
 	);
 
@@ -198,8 +171,8 @@ As
 		benefitID int, 
 		planID int
 		PRIMARY KEY(benefitID,planID),
-		FOREIGN KEY (benefitID) REFERENCES Benefits ON DELETE CASCADE ON UPDATE CASCADE,
-		FOREIGN KEY (planID) REFERENCES Service_Plan ON DELETE CASCADE ON UPDATE CASCADE,
+		FOREIGN KEY (benefitID) REFERENCES Benefits,
+		FOREIGN KEY (planID) REFERENCES Service_Plan ,
 	);
 
 
@@ -261,28 +234,112 @@ EXEC createAllTables;
 
 GO
 
+CREATE FUNCTION CalculateRemainingBalance (@paymentID INT, @planID INT)
+RETURNS DECIMAL(10, 1)
+AS
+BEGIN
+    DECLARE @remaining_balance DECIMAL(10, 1);
+    DECLARE @paymentAmount DECIMAL(10, 1);
+    DECLARE @servicePlanPrice DECIMAL(10, 1);
+
+    SELECT @paymentAmount = P.amount
+    FROM Payment P
+    WHERE P.paymentID = @paymentID;
+
+    SELECT @servicePlanPrice = SP.price
+    FROM Service_Plan SP
+    WHERE SP.planID = @planID;
+
+    IF @paymentAmount < @servicePlanPrice
+    BEGIN
+        SET @remaining_balance = @servicePlanPrice - @paymentAmount;
+    END
+    ELSE
+    BEGIN
+        SET @remaining_balance = 0;
+    END
+
+    RETURN @remaining_balance;
+END;
+GO
+
+CREATE FUNCTION CalculateExtraAmount (@paymentID INT, @planID INT)
+RETURNS DECIMAL(10, 1)
+AS
+BEGIN
+    DECLARE @extra_amount DECIMAL(10, 1);
+    DECLARE @paymentAmount DECIMAL(10, 1);
+    DECLARE @servicePlanPrice DECIMAL(10, 1);
+
+    SELECT @paymentAmount = P.amount
+    FROM Payment P
+    WHERE P.paymentID = @paymentID;
+
+    SELECT @servicePlanPrice = SP.price
+    FROM Service_Plan SP
+    WHERE SP.planID = @planID;
+
+    IF @paymentAmount > @servicePlanPrice
+    BEGIN
+        SET @extra_amount = @paymentAmount - @servicePlanPrice;
+    END
+    ELSE
+    BEGIN
+        SET @extra_amount = 0;
+    END
+
+    RETURN @extra_amount;
+END;
+GO
+
+CREATE TRIGGER CalculateRemainingBalanceAndExtraAmount
+ON Process_Payment
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    DECLARE @paymentID INT;
+    DECLARE @planID INT;
+    DECLARE @remaining_balance DECIMAL(10, 1);
+    DECLARE @extra_amount DECIMAL(10, 1);
+
+    SELECT @paymentID = paymentID, @planID = planID
+    FROM INSERTED;
+
+    SET @remaining_balance = dbo.CalculateRemainingBalance(@paymentID, @planID);
+    SET @extra_amount = dbo.CalculateExtraAmount(@paymentID, @planID);
+
+    UPDATE Process_Payment
+    SET 
+        remaining_balance = @remaining_balance,
+        extra_amount = @extra_amount
+    WHERE paymentID = @paymentID;
+END;
+GO
+
 ---------------------------------------- 2.1c -------------------------------------
 Create PROC dropAllTables
 As
-	DROP TABLE Customer_profile;
-	DROP TABLE Customer_Account;
-	DROP TABLE Service_Plan;
-	DROP TABLE Subscription;
-	DROP TABLE Plan_Usage;
-	DROP TABLE Payment;
-	DROP TABLE Process_Payment;
-	DROP TABLE Wallet;
-	DROP TABLE Transfer_money;
-	DROP TABLE Benefits;
-	DROP TABLE Points_Group;
-	DROP TABLE Exclusive_Offer;
-	DROP TABLE Cashback;
-	DROP TABLE Plan_Provides_Benefits;
-	DROP TABLE Shop;
-	DROP TABLE Physical_Shop;
-	DROP TABLE E_shop;
-	DROP TABLE Voucher;
-	DROP TABLE Technical_Support_Ticket;
+
+DROP TABLE Technical_Support_Ticket;
+DROP TABLE Voucher;
+DROP TABLE E_shop;
+DROP TABLE Physical_Shop;
+DROP TABLE Shop;
+DROP TABLE Plan_Provides_Benefits;
+DROP TABLE Cashback;
+DROP TABLE Exclusive_Offer;
+DROP TABLE Points_Group;
+DROP TABLE Benefits;
+DROP TABLE Transfer_money;
+DROP TABLE Wallet;
+DROP TABLE Process_Payment;
+DROP TABLE Payment;
+DROP TABLE Plan_Usage;
+DROP TABLE Subscription;
+DROP TABLE Service_Plan;
+DROP TABLE Customer_Account;
+DROP TABLE Customer_profile;
+
 ------------------------------------------------------------------------------------
 
 GO
@@ -873,7 +930,7 @@ BEGIN
 END;
 ---------------------------------------- 2.4o -------------------------------------
 go
-CREATE PROCEDURE Redeem_voucher_points
+CREATE PROCEDURE Redeem_voucher_points --TODO: Write query MONICA
 @MobileNo char(11),
 @voucher_id int
 AS 
