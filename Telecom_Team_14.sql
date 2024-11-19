@@ -640,7 +640,17 @@ END;
 GO
 
 ---------------------------------------- 2.3j -------------------------------------
-
+CREATE PROCEDURE Total_Points_Account
+@MobileNo char(11)
+AS
+BEGIN
+	UPDATE Customer_Account 
+	SET point = (SELECT SUM(PG.pointsAmount) AS TotalPointsAmount
+	FROM Benefits B, Points_Group PG, Customer_Account CA
+	WHERE B.mobileNo = CA.mobileNo AND B.benefitID = P.benefitID AND CA.mobileNo = @MobileNo)
+	WHERE mobileNo = @MobileNo
+END;
+GO
 ---------------------------------------- 2.4 -------------------------------------
 ---------------------------------------- 2.4a -------------------------------------
 CREATE FUNCTION AccountLoginValidation(
@@ -862,6 +872,7 @@ BEGIN
 	WHERE walletID = @Wallet_id
 END;
 ---------------------------------------- 2.4o -------------------------------------
+go
 CREATE PROCEDURE Redeem_voucher_points
 @MobileNo char(11),
 @voucher_id int
