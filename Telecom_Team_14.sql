@@ -974,5 +974,22 @@ CREATE PROCEDURE Redeem_voucher_points --TODO: Write query MONICA
 @voucher_id int
 AS 
 BEGIN
-
+	DECLARE @VoucherPoints INT;
+    DECLARE @AccountPoints INT;
+	SELECT @VoucherPoints = points
+        FROM Voucher
+        WHERE voucherID = @VoucherID;
+	SELECT @AccountPoints = point
+        FROM Customer_Account
+        WHERE mobileNo = @MobileNo;
+	IF ((SELECT v.expiry_date FROM Voucher v WHERE v.voucherID = @voucher_id) > CURRENT_TIMESTAMP) and (@VoucherPoints<@AccountPoints)
+		BEGIN
+			UPDATE Voucher 
+			SET mobileNo = @MobileNo , redeem_date = CURRENT_TIMESTAMP
+			WHERE voucherID = @voucher_id;
+		END
+	ELSE
+		BEGIN
+			PRINT 'Cannot redeem voucher'
+		END
 END;
