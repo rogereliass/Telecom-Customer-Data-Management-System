@@ -320,25 +320,25 @@ GO
 Create PROC dropAllTables
 As
 
-DROP TABLE Technical_Support_Ticket;
-DROP TABLE Voucher;
-DROP TABLE E_shop;
-DROP TABLE Physical_Shop;
-DROP TABLE Shop;
-DROP TABLE Plan_Provides_Benefits;
-DROP TABLE Cashback;
-DROP TABLE Exclusive_Offer;
-DROP TABLE Points_Group;
-DROP TABLE Benefits;
-DROP TABLE Transfer_money;
-DROP TABLE Wallet;
-DROP TABLE Process_Payment;
-DROP TABLE Payment;
-DROP TABLE Plan_Usage;
-DROP TABLE Subscription;
-DROP TABLE Service_Plan;
-DROP TABLE Customer_Account;
-DROP TABLE Customer_profile;
+	DROP TABLE Technical_Support_Ticket;
+	DROP TABLE Voucher;
+	DROP TABLE E_shop;
+	DROP TABLE Physical_Shop;
+	DROP TABLE Shop;
+	DROP TABLE Plan_Provides_Benefits;
+	DROP TABLE Cashback;
+	DROP TABLE Exclusive_Offer;
+	DROP TABLE Points_Group;
+	DROP TABLE Benefits;
+	DROP TABLE Transfer_money;
+	DROP TABLE Wallet;
+	DROP TABLE Process_Payment;
+	DROP TABLE Payment;
+	DROP TABLE Plan_Usage;
+	DROP TABLE Subscription;
+	DROP TABLE Service_Plan;
+	DROP TABLE Customer_Account;
+	DROP TABLE Customer_profile;
 
 ------------------------------------------------------------------------------------
 
@@ -350,10 +350,49 @@ GO
 
 ---------------------------------------- 2.1d -------------------------------------
 
-Create PROC dropAllProceduresFunctionsViews --TODO: to be continued at end of milestone
+Create PROC dropAllProceduresFunctionsViews 
 As
-	DROP PROC createAllTables;
-	DROP PROC dropAllTables;
+    DROP VIEW IF EXISTS allCustomerAccounts;
+    DROP VIEW IF EXISTS allServicePlans;
+    DROP VIEW IF EXISTS allBenefits;
+    DROP VIEW IF EXISTS AccountPayments;
+    DROP VIEW IF EXISTS allShops;
+    DROP VIEW IF EXISTS allResolvedTickets;
+    DROP VIEW IF EXISTS CustomerWallet;
+    DROP VIEW IF EXISTS E_shopVouchers;
+    DROP VIEW IF EXISTS PhysicalStoreVouchers;
+    DROP VIEW IF EXISTS Num_of_cashback;
+
+    DROP FUNCTION IF EXISTS Account_Plan_date;
+    DROP FUNCTION IF EXISTS Account_Usage_Plan;
+    DROP FUNCTION IF EXISTS Account_SMS_Offers;
+    DROP FUNCTION IF EXISTS Wallet_Cashback_Amount;
+    DROP FUNCTION IF EXISTS Wallet_Transfer_Amount;
+    DROP FUNCTION IF EXISTS Wallet_MobileNo;
+    DROP FUNCTION IF EXISTS AccountLoginValidation;
+    DROP FUNCTION IF EXISTS Consumption;
+    DROP FUNCTION IF EXISTS Remaining_plan_amount;
+    DROP FUNCTION IF EXISTS Extra_plan_amount;
+    DROP FUNCTION IF EXISTS Subscribed_plans_5_Months;
+
+    DROP PROCEDURE IF EXISTS createAllTables;
+    DROP PROCEDURE IF EXISTS dropAllTables;
+    DROP PROCEDURE IF EXISTS clearAllTables;
+    DROP PROCEDURE IF EXISTS Account_Plan;
+    DROP PROCEDURE IF EXISTS Benefits_Account;
+    DROP PROCEDURE IF EXISTS Account_Payment_Points;
+    DROP PROCEDURE IF EXISTS Total_Points_Account;
+    DROP PROCEDURE IF EXISTS Unsubscribed_Plans;
+    DROP PROCEDURE IF EXISTS Usage_Plan_CurrentMonth;
+    DROP PROCEDURE IF EXISTS Cashback_Wallet_Customer;
+    DROP PROCEDURE IF EXISTS Ticket_Account_Customer;
+    DROP PROCEDURE IF EXISTS Account_Highest_Voucher;
+    DROP PROCEDURE IF EXISTS Top_Successful_Payments;
+    DROP PROCEDURE IF EXISTS Initiate_plan_payment;
+    DROP PROCEDURE IF EXISTS Payment_wallet_cashback;
+    DROP PROCEDURE IF EXISTS Initiate_balance_payment;
+    DROP PROCEDURE IF EXISTS Redeem_voucher_points;
+
 
 ------------------------------------------------------------------------------------
 
@@ -608,7 +647,7 @@ RETURN
     SELECT eo.offerID, eo.SMS_offered, eo.internet_offered, eo.minutes_offered, b.description
     FROM Exclusive_Offer eo INNER JOIN Benefits b ON eo.benefitID = b.benefitID
     WHERE b.mobileNo = @MobileNo
-    AND eo.SMS_offered > 0 --TODO: Include SMS offers or Only SMS Offers?
+    AND eo.SMS_offered > 0 
 );
 GO
 
@@ -929,7 +968,7 @@ BEGIN
 	WHERE walletID = @Wallet_id
 END;
 ---------------------------------------- 2.4o -------------------------------------
-go
+GO
 CREATE PROCEDURE Redeem_voucher_points --TODO: Write query MONICA
 @MobileNo char(11),
 @voucher_id int
