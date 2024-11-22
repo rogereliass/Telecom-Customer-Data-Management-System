@@ -85,11 +85,11 @@ As
 	);
 
 
-	Create Table Process_Payment ( --TODO: FUNCTIONS NOT ACCEPTED BY MSSQL
+	Create Table Process_Payment (
 		paymentID int, 
 		planID int, 
-		remaining_balance DECIMAL(10,1), --As dbo.CalculateRemainingBalance(paymentID, planID) PERSISTED,
-		extra_amount DECIMAL(10,1), --As dbo.CalculateExtraAmount(paymentID, planID) PERSISTED,
+		remaining_balance DECIMAL(10,1), --As trigger calculation
+		extra_amount DECIMAL(10,1), --As trigger calculation
 		PRIMARY KEY (paymentID),
 		FOREIGN KEY (paymentID) REFERENCES Payment ON DELETE CASCADE ON UPDATE CASCADE,
 		FOREIGN KEY (planID) REFERENCES Service_Plan ON DELETE CASCADE ON UPDATE CASCADE
@@ -158,12 +158,12 @@ As
 		CashbackID int identity(1,1), 
 		benefitID int, 
 		walletID int, 
-		amount int, 
+		amount int default 0, 
 		credit_date date,
 		PRIMARY KEY(CashbackID,benefitID),
 		FOREIGN KEY (benefitID) REFERENCES Benefits,
 		FOREIGN KEY (walletID) REFERENCES Wallet
-		--TODO: Cashback as 10% from payment amount
+		--Cashback as 10% from payment amount in 2.4M
 	);
 
 
@@ -326,22 +326,6 @@ FROM
     Process_Payment PP;
 GO
 
-CREATE FUNCTION CalculateCashback (@paymentID INT)
-RETURNS DECIMAL(10, 1)
-AS
-BEGIN
-    DECLARE @cashback DECIMAL(10, 1);
-    DECLARE @amount DECIMAL(10, 1);
-
-    SELECT @amount = amount
-    FROM Payment
-    WHERE paymentID = @paymentID;
-
-    SET @cashback = @amount * 0.10;
-
-    RETURN @cashback;
-END;
-GO
 ---------------------------------------- 2.1c -------------------------------------
 Create PROC dropAllTables
 As
