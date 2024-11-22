@@ -940,7 +940,7 @@ AS
 RETURN(
 	SELECT P.name
 	FROM Subscription S, Service_Plan P 
-	WHERE S.mobileNo = @MobileNo and S.planID = P.planID and S.subscription_date >= DATEADD(MONTH, -5, GETDATE()) 
+	WHERE S.mobileNo = @MobileNo and S.planID = P.planID and DATEDIFF(MONTH, S.subscription_date, GETDATE()) <= 5 
 );
 GO
 ---------------------------------------- 2.4l -------------------------------------
