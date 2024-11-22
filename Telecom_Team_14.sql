@@ -814,14 +814,11 @@ RETURNS TABLE
 AS 
 RETURN(
 	SELECT SUM(PU.data_consumption) AS Data_Consumption, SUM(PU.minutes_used) AS Minutes_Used, SUM(PU.SMS_sent) AS SMS_Sent
-	FROM Plan_Usage PU, Service_Plan SP, Subscription S
-	WHERE PU.mobileNo = S.mobileNo 
-		AND PU.planId = SP.planId
-		AND SP.planId = S.planId
+	FROM Plan_Usage PU, Service_Plan SP
+	WHERE PU.planId = SP.planId
 		AND SP.name = @plan_name
 		AND PU.start_date >= @start_date              
         AND PU.end_date <= @end_date                    
-        AND S.status = 'Active'
 )
 GO
 
