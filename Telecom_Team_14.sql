@@ -448,7 +448,20 @@ GO
 
 ---------------------------------------- 2.2a -------------------------------------
 CREATE VIEW allCustomerAccounts AS
-SELECT *
+SELECT 
+	P.nationalID , 
+	P.first_name, 
+	P.last_name, 
+	P.email, 
+	P.address, 
+	P.date_of_birth, 
+	A.mobileNo AS Account_MobileNo, 
+	A.pass AS Account_Password, 
+	A.balance AS Account_Balance, 
+	A.account_type, 
+	A.start_date, 
+	A.status AS Account_Status, 
+	A.point AS Account_Points 
 FROM Customer_profile P, Customer_Account A
 WHERE status='Active' and A.nationalID = P.nationalID
 GO
@@ -468,7 +481,19 @@ GO
 
 ---------------------------------------- 2.2d -------------------------------------
 CREATE VIEW AccountPayments AS
-SELECT *
+SELECT 
+	P.paymentID, 
+	P.amount AS Payment_Amount, 
+	P.date_of_payment, 
+	P.payment_method, 
+	P.status AS Payment_Status, 
+	P.mobileNo, 
+	A.pass AS Account_Password, 
+	A.balance AS Account_Balance, 
+	A.account_type, 
+	A.start_date, 
+	A.status AS Account_Status, 
+	A.point AS Account_Points 
 FROM Payment P, Customer_Account A
 WHERE P.mobileNo = A.mobileNo
 GO
@@ -494,10 +519,6 @@ FROM
 WHERE
     status = 'Resolved';
 GO
-
-
-
-
 
 ---------------------------------------- 2.2g -------------------------------------
 
@@ -550,7 +571,7 @@ GO
 CREATE VIEW Num_of_cashback AS
 SELECT
     w.walletID,
-    COUNT(c.CashbackID)
+    COUNT(c.CashbackID) AS Number_Of_Cashbacks
 FROM
     Wallet w
 LEFT JOIN
@@ -604,12 +625,13 @@ Create Function Account_Usage_Plan(
 returns table 
 As
 RETURN (
-	Select U.plan_ID AS Plan_ID, 
+	Select U.planID, 
 		SUM(U.data_consumption) AS Total_Data_Consumed,
         SUM(U.minutes_used) AS Total_Minutes_Used,
         SUM(U.SMS_sent) AS Total_SMS
 	From Plan_Usage U
 	Where U.mobileNo = @MobileNo AND U.start_date >= @from_date
+	GROUP BY U.planID
 );
 GO
 
@@ -792,7 +814,7 @@ RETURNS TABLE
 AS 
 RETURN(
 	SELECT SUM(PU.data_consumption) AS Data_Consumption, SUM(PU.minutes_used) AS Minutes_Used, SUM(PU.SMS_sent) AS SMS_Sent
-	FROM PlanUsage PU, Service_Plan SP, Subscription S
+	FROM Plan_Usage PU, Service_Plan SP, Subscription S
 	WHERE PU.mobileNo = S.mobileNo 
 		AND PU.planId = SP.planId
 		AND SP.planId = S.planId
@@ -918,7 +940,7 @@ AS
 RETURN(
 	SELECT P.name
 	FROM Subscription S, Service_Plan P 
-	WHERE S.mobileNo = @MobileNo and S.planID = P.planID and (CURRENT_TIMESTAMP - S.subscription_date)<=5 
+	WHERE S.mobileNo = @MobileNo and S.planID = P.planID and S.subscription_date >= DATEADD(MONTH, -5, GETDATE()) 
 );
 GO
 ---------------------------------------- 2.4l -------------------------------------
@@ -988,7 +1010,7 @@ BEGIN
     DECLARE @AccountPoints INT;
 	SELECT @VoucherPoints = points
         FROM Voucher
-        WHERE voucherID = @VoucherID;
+        WHERE voucherID = @voucher_id;
 	SELECT @AccountPoints = point
         FROM Customer_Account
         WHERE mobileNo = @MobileNo;
