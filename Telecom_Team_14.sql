@@ -1,4 +1,4 @@
-﻿drop database Telecom_Team_14;
+﻿create database Telecom_Team_14;
 
 use  Telecom_Team_14;
 
