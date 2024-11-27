@@ -1,6 +1,6 @@
-﻿--create database Milestone2DB_24
+﻿drop database Telecom_Team_14;
 
-use  Milestone2DB_24
+use  Telecom_Team_14;
 
 go
 -------------------------------------------------------------------------------------
