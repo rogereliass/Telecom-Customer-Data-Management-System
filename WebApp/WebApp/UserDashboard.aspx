@@ -51,7 +51,7 @@
         <h1>User Dashboard</h1>
         <div class="grid">
             <asp:Button ID="Button1" runat="server" Text="Total Consumption" CssClass="btn" PostBackUrl="TotalConsumption.aspx" />
-            <asp:Button ID="Button2" runat="server" Text="Page 2" CssClass="btn" PostBackUrl="Page2.aspx" />
+            <asp:Button ID="Button2" runat="server" Text="Unsubscribed Plans" CssClass="btn" PostBackUrl="UnsubscribedPlans.aspx" />
             <asp:Button ID="Button3" runat="server" Text="Page 3" CssClass="btn" PostBackUrl="Page3.aspx" />
             <asp:Button ID="Button4" runat="server" Text="Page 4" CssClass="btn" PostBackUrl="Page4.aspx" />
             <asp:Button ID="Button5" runat="server" Text="Page 5" CssClass="btn" PostBackUrl="Page5.aspx" />

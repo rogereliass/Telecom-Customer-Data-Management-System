@@ -72,6 +72,7 @@
     <Content Include="Index.aspx" />
     <Content Include="Page1.aspx" />
     <Content Include="TotalConsumption.aspx" />
+    <Content Include="UnsubscribedPlans.aspx" />
     <Content Include="UserDashboard.aspx" />
     <Content Include="UserLogin.aspx" />
     <Content Include="Web.config" />
@@ -112,6 +113,13 @@
     </Compile>
     <Compile Include="TotalConsumption.aspx.designer.cs">
       <DependentUpon>TotalConsumption.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UnsubscribedPlans.aspx.cs">
+      <DependentUpon>UnsubscribedPlans.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UnsubscribedPlans.aspx.designer.cs">
+      <DependentUpon>UnsubscribedPlans.aspx</DependentUpon>
     </Compile>
     <Compile Include="UserDashboard.aspx.cs">
       <DependentUpon>UserDashboard.aspx</DependentUpon>

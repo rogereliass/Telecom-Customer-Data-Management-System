@@ -37,6 +37,7 @@ namespace WebApp
                     {
                         Response.Write("<script>alert('Login successful!');</script>");
                         Response.Redirect("UserDashboard.aspx");
+                        Session["user"] = mobile;
                     }
                     else
                     {

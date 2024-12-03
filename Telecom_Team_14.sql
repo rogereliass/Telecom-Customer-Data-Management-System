@@ -1032,4 +1032,99 @@ INSERT INTO Plan_Usage (start_date, end_date, data_consumption, minutes_used, SM
 VALUES 
 ('2024-01-01', '2024-01-31', 4, 450, 80, '01100996345', 1);
 
+
+
 SELECT * from dbo.Consumption('Basic Plan', '2024-01-01', '2024-01-31')
+
+
+
+INSERT INTO Customer_profile (nationalID, first_name, last_name, email, address, date_of_birth)
+VALUES 
+(1, 'John', 'Doe', 'john.doe@example.com', '123 Main St', '1980-05-15'),
+(2, 'Jane', 'Smith', 'jane.smith@example.com', '456 Oak Ave', '1992-11-25'),
+(3, 'Robert', 'Johnson', 'robert.johnson@example.com', '789 Pine Rd', '1975-03-10');
+INSERT INTO Customer_Account (mobileNo, pass, balance, account_type, start_date, status, points, nationalID)
+VALUES 
+('01234567890', 'password123', 1500.5, 'postpaid', '2024-01-01', 'Active', 50, 1),
+('09876543210', 'securepassword', 2000.0, 'prepaid', '2024-02-01', 'OnHold', 20, 2),
+('01122334455', 'password789', 500.0, 'pay-as-you-go', '2023-06-15', 'Active', 100, 3);
+
+INSERT INTO Subscription (mobileNo, planID, subscription_date, status)
+VALUES 
+('01234567890', 1, '2024-01-01', 'Active'),
+('09876543210', 2, '2024-02-01', 'OnHold'),
+('01122334455', 3, '2023-06-15', 'Active');
+INSERT INTO Plan_Usage (start_date, end_date, data_consumption, minutes_used, SMS_sent, mobileNo, planID)
+VALUES 
+('2024-02-01', '2024-02-28', 8, 600, 150, '09876543210', 2),
+('2023-06-15', '2023-06-30', 12, 1000, 250, '01122334455', 3);
+INSERT INTO Payment (amount, date_of_payment, payment_method, status, mobileNo)
+VALUES 
+(150.5, '2024-01-10', 'Cash', 'Successful', '01234567890'),
+(200.0, '2024-02-15', 'Credit', 'Pending', '09876543210'),
+(50.0, '2023-07-01', 'Cash', 'Successful', '01122334455');
+INSERT INTO Process_Payment (paymentID, planID)
+VALUES 
+(1, 1),
+(2, 2),
+(3, 3);
+INSERT INTO Wallet (current_balance, currency, last_modified_date, nationalID)
+VALUES 
+(500.0, 'USD', '2024-01-01', 1),
+(300.0, 'USD', '2024-02-01', 2),
+(100.0, 'USD', '2023-06-15', 3);
+INSERT INTO Transfer_money (walletID1, walletID2, transfer_id, amount, transfer_date)
+VALUES 
+(1, 2, 101, 50.0, '2024-01-20'),
+(2, 3, 102, 30.0, '2024-02-10'),
+(3, 1, 103, 70.0, '2023-07-10');
+INSERT INTO Benefits (description, validity_date, status, mobileNo)
+VALUES 
+('Extra 500 SMS for plan upgrade', '2024-06-01', 'Active', '01234567890'),
+('10% cashback on payment', '2024-03-15', 'Active', '09876543210'),
+('Free 1GB data for next month', '2024-05-01', 'Expired', '01122334455');
+INSERT INTO Points_Group (benefitID, pointsAmount, PaymentID)
+VALUES 
+(1, 100, 1),
+(2, 150, 2),
+(3, 200, 3);
+INSERT INTO Exclusive_Offer (benefitID, internet_offered, SMS_offered, minutes_offered)
+VALUES 
+(1, 2, 50, 100),
+(2, 5, 100, 200),
+(3, 10, 200, 300);
+INSERT INTO Cashback (benefitID, walletID, amount, credit_date)
+VALUES 
+(1, 1, 15.0, '2024-01-21'),
+(2, 2, 20.0, '2024-02-12'),
+(3, 3, 25.0, '2023-07-15');
+INSERT INTO Plan_Provides_Benefits (benefitID, planID)
+VALUES 
+(1, 1),
+(2, 2),
+(3, 3);
+INSERT INTO Shop (name, category)
+VALUES 
+('TechStore', 'Electronics'),
+('MobileMart', 'Mobile Phones'),
+('SuperShop', 'Groceries');
+INSERT INTO Physical_Shop (shopID, address, working_hours)
+VALUES 
+(1, '123 Tech Rd', '09:00-18:00'),
+(2, '456 Mobile St', '10:00-20:00'),
+(3, '789 Super St', '08:00-22:00');
+INSERT INTO E_shop (shopID, URL, rating)
+VALUES 
+(1, 'https://www.techstore.com', 4),
+(2, 'https://www.mobilemart.com', 5),
+(3, 'https://www.supershop.com', 3);
+INSERT INTO Voucher (value, expiry_date, points, mobileNo, shopID, redeem_date)
+VALUES 
+(100, '2024-12-31', 500, '01234567890', 1, '2024-01-10'),
+(50, '2024-03-15', 300, '09876543210', 2, '2024-02-05'),
+(200, '2024-06-01', 1000, '01122334455', 3, '2023-07-05');
+INSERT INTO Technical_Support_Ticket (mobileNo, Issue_description, priority_level, status)
+VALUES 
+('01234567890', 'Unable to connect to mobile data', 1, 'Open'),
+('09876543210', 'Payment issue on my account', 2, 'InProgress'),
+('01122334455', 'Network problem', 3, 'Resolved');
