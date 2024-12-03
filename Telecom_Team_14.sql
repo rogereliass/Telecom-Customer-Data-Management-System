@@ -1010,3 +1010,26 @@ Exec Initiate_balance_payment @mobile_num = '01234567890', @amount =100, @paymen
 
 Exec Redeem_voucher_points @mobile_num = '01234567890', @voucher_id = 3 
 
+
+-------------------------------------------------------------------------------
+Select * From customer_profile;
+INSERT INTO Customer_profile (nationalID, first_name, last_name, email, address, date_of_birth)
+VALUES 
+(1, 'Roger', 'Elias', 'roger.elias@gmail.com', '1A Sheraton', '2003-11-12');
+
+INSERT INTO Customer_Account (mobileNo, pass, balance, account_type, start_date, status, points, nationalID)
+VALUES 
+('01100996345', 'customer', 1500.5, 'prepaid', '2024-01-01', 'Active', 50, 1);
+
+INSERT INTO Service_Plan (SMS_offered, minutes_offered, data_offered, name, price, description)
+VALUES 
+(100, 500, 5, 'Basic Plan', 15, '100 SMS, 500 mins, 5 GB data'),
+(200, 1000, 10, 'Premium Plan', 25, '200 SMS, 1000 mins, 10 GB data'),
+(300, 1500, 15, 'Ultimate Plan', 35, '300 SMS, 1500 mins, 15 GB data');
+
+
+INSERT INTO Plan_Usage (start_date, end_date, data_consumption, minutes_used, SMS_sent, mobileNo, planID)
+VALUES 
+('2024-01-01', '2024-01-31', 4, 450, 80, '01100996345', 1);
+
+SELECT * from dbo.Consumption('Basic Plan', '2024-01-01', '2024-01-31')
