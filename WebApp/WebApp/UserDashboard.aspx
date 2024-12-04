@@ -52,14 +52,14 @@
         <div class="grid">
             <asp:Button ID="Button1" runat="server" Text="Total Consumption" CssClass="btn" PostBackUrl="TotalConsumption.aspx" />
             <asp:Button ID="Button2" runat="server" Text="Unsubscribed Plans" CssClass="btn" PostBackUrl="UnsubscribedPlans.aspx" />
-            <asp:Button ID="Button3" runat="server" Text="Page 3" CssClass="btn" PostBackUrl="Page3.aspx" />
-            <asp:Button ID="Button4" runat="server" Text="Page 4" CssClass="btn" PostBackUrl="Page4.aspx" />
-            <asp:Button ID="Button5" runat="server" Text="Page 5" CssClass="btn" PostBackUrl="Page5.aspx" />
-            <asp:Button ID="Button6" runat="server" Text="Page 6" CssClass="btn" PostBackUrl="Page6.aspx" />
-            <asp:Button ID="Button7" runat="server" Text="Page 7" CssClass="btn" PostBackUrl="Page7.aspx" />
-            <asp:Button ID="Button8" runat="server" Text="Page 8" CssClass="btn" PostBackUrl="Page8.aspx" />
-            <asp:Button ID="Button9" runat="server" Text="Page 9" CssClass="btn" PostBackUrl="Page9.aspx" />
-            <asp:Button ID="Button10" runat="server" Text="Page 10" CssClass="btn" PostBackUrl="Page10.aspx" />
+            <asp:Button ID="Button3" runat="server" Text="Monthly Plan Usage" CssClass="btn" PostBackUrl="ActivePlanUsage.aspx" />
+            <asp:Button ID="Button4" runat="server" Text="Wallet Cashback" CssClass="btn" PostBackUrl="WalletCashback.aspx" />
+            <asp:Button ID="Button5" runat="server" Text="All Benefits" CssClass="btn" PostBackUrl="AllBenefits.aspx" />
+            <asp:Button ID="Button6" runat="server" Text="Unresolved Tickets" CssClass="btn" PostBackUrl="UnresolvedTickets.aspx" />
+            <asp:Button ID="Button7" runat="server" Text="Highest Value Voucher" CssClass="btn" PostBackUrl="HighestVoucher.aspx" />
+            <asp:Button ID="Button8" runat="server" Text="Remaining Plan Amount" CssClass="btn" PostBackUrl="RemainingPlanAmount.aspx" />
+            <asp:Button ID="Button9" runat="server" Text="Extra Plan Amount" CssClass="btn" PostBackUrl="ExtraPlanAmount.aspx" />
+            <asp:Button ID="Button10" runat="server" Text="Top 10 Successful Payments" CssClass="btn" PostBackUrl="TopSuccessfulPayments.aspx" />
             <asp:Button ID="Button11" runat="server" Text="Page 11" CssClass="btn" PostBackUrl="Page11.aspx" />
             <asp:Button ID="Button12" runat="server" Text="Page 12" CssClass="btn" PostBackUrl="Page12.aspx" />
             <asp:Button ID="Button13" runat="server" Text="Page 13" CssClass="btn" PostBackUrl="Page13.aspx" />
