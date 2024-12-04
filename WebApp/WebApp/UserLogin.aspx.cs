@@ -35,9 +35,9 @@ namespace WebApp
 
                     if (isValidUser)
                     {
+                        Session["user"] = mobile; // Store mobile number in session
                         Response.Write("<script>alert('Login successful!');</script>");
                         Response.Redirect("UserDashboard.aspx");
-                        Session["user"] = mobile;
                     }
                     else
                     {

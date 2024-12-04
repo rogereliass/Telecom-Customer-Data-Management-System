@@ -1036,7 +1036,12 @@ VALUES
 
 SELECT * from dbo.Consumption('Basic Plan', '2024-01-01', '2024-01-31')
 
-
+INSERT INTO Customer_profile (nationalID, first_name, last_name, email, address, date_of_birth)
+VALUES 
+(10, 'Roger', 'Elias', 'roger.elias@gmail.com', '1A Al-Hassan', '2003-11-12');
+INSERT INTO Customer_Account (mobileNo, pass, balance, account_type, start_date, status, points, nationalID)
+VALUES 
+('01100996345', 'customer', 1200, 'postpaid', '2024-01-01', 'Active', 50, 1);
 
 INSERT INTO Customer_profile (nationalID, first_name, last_name, email, address, date_of_birth)
 VALUES 

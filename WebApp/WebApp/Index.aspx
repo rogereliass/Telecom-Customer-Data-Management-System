@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Telecom Services</title>
+    <title>GUC Telecom Services</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -40,7 +40,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Telecom Services</h1>
+        <h1>GUC Telecom Services</h1>
         <a class="btn" href="UserLogin.aspx">User Login</a>
         <a class="btn" href="AdminLogin.aspx">Admin Login</a>
     </div>
