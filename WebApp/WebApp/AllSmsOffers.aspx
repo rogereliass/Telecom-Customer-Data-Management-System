@@ -68,9 +68,10 @@
     <form id="form26" runat="server">
     <div class="container">
         <h1>Get all sms offers</h1>
+
         
-        
-        
+        <label for="mobileInput">Enter a Mobile Number:</label>
+        <asp:TextBox ID="mobileNo" runat="server" CssClass="input-text" />
 
         <asp:Button ID="SearchButton" runat="server" Text="Search" CssClass="btn" OnClick="SearchButton_Click" />
 

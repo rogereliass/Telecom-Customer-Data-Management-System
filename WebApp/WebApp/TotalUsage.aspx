@@ -69,7 +69,8 @@
     <div class="container">
         <h1>Get total usage</h1>
         
-        
+        <label for="mobileInput">Enter a Mobile Number:</label>
+        <asp:TextBox ID="mobileNo" runat="server" CssClass="input-text" />
 
         <label for="dateInput">Select an Start Date:</label>
         <asp:TextBox ID="StartDateInput" runat="server" CssClass="input-text" TextMode="Date" />
@@ -79,7 +80,7 @@
 
         <asp:GridView ID="ResultGrid" runat="server" CssClass="gridview" Visible="true" />
 
-        <asp:Button ID="ReturnButton" runat="server" Text="Return to Dashboard" CssClass="btn" PostBackUrl="UserDashboard.aspx" />
+        <asp:Button ID="ReturnButton" runat="server" Text="Return to Dashboard" CssClass="btn" PostBackUrl="AdminDashboard.aspx" />
     </div>
     </form>
 </body>

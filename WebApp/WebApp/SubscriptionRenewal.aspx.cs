@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace WebApp
 {
@@ -11,24 +14,30 @@ namespace WebApp
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["user"] != null)
-            {
-                string mobileNo = Session["user"].ToString();
-
-                LoadTopPlans(mobileNo);
-            }
-            else
-            {
-                Response.Write("<script>alert('User session not found. Please log in.');</script>");
-            }
+           
 
         }
 
-        private void SearchButton_Click(string mobileNo)
+        protected void SearchButton_Click(object sender, EventArgs e)
         {
+            // Validate inputs
+            if (!ValidateInputs())
+            {
+                return; // Stop if validation fails
+            }
+
+            // Retrieve the user's session
+            if (Session["user"] == null)
+            {
+                Response.Write("<script>alert('User session not found. Please log in.');</script>");
+                return;
+            }
+
+            string mobileNo = Session["user"].ToString();
             string connectionString = ConfigurationManager.ConnectionStrings["GUC_Telecom"].ConnectionString;
             string storedProcedure = "Initiate_plan_payment";
-            string paymenAmount = AmountTextBox.Text.Trim();
+
+            string paymentAmount = AmountTextBox.Text.Trim();
             string paymentMethod = PaymentMethodDropDown.SelectedValue;
             string planID = PlanIDTextBox.Text.Trim();
 
@@ -37,32 +46,58 @@ namespace WebApp
                 SqlCommand command = new SqlCommand(storedProcedure, connection);
                 command.CommandType = CommandType.StoredProcedure;
 
+                // Pass parameters
                 command.Parameters.AddWithValue("@mobile_num", mobileNo);
-                command.Parameters.AddWithValue("@amount", paymenAmount);
+                command.Parameters.AddWithValue("@amount", decimal.Parse(paymentAmount));
                 command.Parameters.AddWithValue("@payment_method", paymentMethod);
-                command.Parameters.AddWithValue("@plan_id", planID);
-
+                command.Parameters.AddWithValue("@plan_id", int.Parse(planID));
 
                 try
                 {
                     connection.Open();
 
-                    SqlDataAdapter adapter = new SqlDataAdapter(command);
-                    DataTable dataTable = new DataTable();
+                    command.ExecuteNonQuery(); // Execute the stored procedure for renewal
 
-                    adapter.Fill(dataTable);
-
-                    ResultGrid.DataSource = dataTable;
-                    ResultGrid.DataBind();
-                    ResultGrid.Visible = true;
-                    ResultLabel.Text = $"Succesful Renewal Of The Subscription";
+                    ResultLabel.Text = "Successful Renewal of the Subscription.";
+                    ResultLabel.ForeColor = System.Drawing.Color.Green;
                 }
                 catch (Exception ex)
                 {
-                    ResultGrid.Visible = false;
-                    Response.Write($"<script>alert('Error: {ex.Message}');</script>");
+                    ResultLabel.Text = $"Error: {ex.Message}";
+                    ResultLabel.ForeColor = System.Drawing.Color.Red;
                 }
             }
+        }
+        private bool ValidateInputs()
+        {
+            bool isValid = true;
+            string errorMessage = string.Empty;
+
+            if (string.IsNullOrEmpty(AmountTextBox.Text.Trim()) || !decimal.TryParse(AmountTextBox.Text.Trim(), out _))
+            {
+                errorMessage += "Amount must be a valid number.<br/>";
+                isValid = false;
+            }
+
+            if (string.IsNullOrEmpty(PlanIDTextBox.Text.Trim()) || !int.TryParse(PlanIDTextBox.Text.Trim(), out _))
+            {
+                errorMessage += "Plan ID must be a valid integer.<br/>";
+                isValid = false;
+            }
+
+            if (string.IsNullOrEmpty(PaymentMethodDropDown.SelectedValue))
+            {
+                errorMessage += "Please select a payment method.<br/>";
+                isValid = false;
+            }
+
+            if (!isValid)
+            {
+                ResultLabel.Text = errorMessage;
+                ResultLabel.ForeColor = System.Drawing.Color.Red;
+            }
+
+            return isValid;
         }
     }
 }

@@ -18,20 +18,11 @@ namespace WebApp
         }
         protected void SearchButton_Click(object sender, EventArgs e)
         {
-            if (Session["user"] != null)
-            {
-                string mobileNo = Session["user"].ToString();
-
-
-            }
-            else
-            {
-                Response.Write("<script>alert('User session not found. Please log in.');</script>");
-            }
+            string mobileNum = mobileNo.Text.Trim();
             string startDate = StartDateInput.Text.Trim();
 
             // Validate input
-            if (string.IsNullOrEmpty(startDate))
+            if (string.IsNullOrEmpty(startDate) || string.IsNullOrEmpty(mobileNum))
             {
                 ResultGrid.Visible = false;
                 Response.Write("<script>alert('Please provide all required inputs.');</script>");
@@ -49,7 +40,7 @@ namespace WebApp
                 command.CommandType = CommandType.Text;  // Text because it's a SELECT query
 
                 // Pass parameters to the query
-                command.Parameters.AddWithValue("@mobile_num", Session["user"].ToString());
+                command.Parameters.AddWithValue("@mobile_num", mobileNum);
                 command.Parameters.AddWithValue("@from_date", DateTime.Parse(startDate));
                 
 

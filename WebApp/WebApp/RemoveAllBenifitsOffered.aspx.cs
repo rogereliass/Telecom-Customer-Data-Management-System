@@ -17,20 +17,11 @@ namespace WebApp
         }
         protected void SearchButton_Click(object sender, EventArgs e)
         {
-            if (Session["user"] != null)
-            {
-                string mobileNo = Session["user"].ToString();
-
-
-            }
-            else
-            {
-                Response.Write("<script>alert('User session not found. Please log in.');</script>");
-            }
-            string planId = PlanN.Text.Trim();
+            string mobileNum = mobileNo.Text.Trim();
+            string planId = Planid.Text.Trim();
             
 
-            if (string.IsNullOrEmpty(planId))
+            if (string.IsNullOrEmpty(planId) || string.IsNullOrEmpty(mobileNum))
             {
                 ResultGrid.Visible = false;
                 Response.Write("<script>alert('Please provide all required inputs.');</script>");
@@ -49,7 +40,7 @@ namespace WebApp
 
                 // Pass parameters
                 command.Parameters.AddWithValue("@plan_id", planId);
-                command.Parameters.AddWithValue("@mobile_num", Session["user"].ToString());
+                command.Parameters.AddWithValue("@mobile_num", mobileNo);
                 
 
                 try
