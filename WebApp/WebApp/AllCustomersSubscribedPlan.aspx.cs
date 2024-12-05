@@ -11,6 +11,39 @@ namespace WebApp
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            
+
+     
+
+            string connectionString = ConfigurationManager.ConnectionStrings["GUC_Telecom"].ConnectionString;
+
+            
+            string query = "Account_Plan";   
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.CommandType = CommandType.StoredProcedure;
+
+                try
+                {
+                    connection.Open();
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    DataTable dataTable = new DataTable();
+                    adapter.Fill(dataTable);
+
+                    ResultGrid.DataSource = dataTable;
+                    ResultGrid.DataBind();
+                    ResultGrid.Visible = true;
+                }
+                catch (Exception ex)
+                {
+                    ResultGrid.Visible = false;
+                    Response.Write($"<script>alert('Error: {ex.Message}');</script>");
+                }
+            }
+
 
         }
     }
