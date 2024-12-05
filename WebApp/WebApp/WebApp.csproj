@@ -67,25 +67,55 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AcceptedTransactionsLastYear.aspx" />
     <Content Include="ActivePlanUsage.aspx" />
     <Content Include="AdminDashboard.aspx" />
     <Content Include="AdminLogin.aspx" />
     <Content Include="AllBenefits.aspx" />
+    <Content Include="AllCustomerInputPlan.aspx" />
+    <Content Include="AllCustomersSubscribedPlan.aspx" />
+    <Content Include="AllE-Shops.aspx" />
+    <Content Include="AllPaymentTransactions.aspx" />
+    <Content Include="AllPhysicalStores.aspx" />
+    <Content Include="AllResolvedTickets.aspx" />
+    <Content Include="AllServicePlans5Months.aspx" />
+    <Content Include="AllShopsDetails.aspx" />
+    <Content Include="AllSmsOffers.aspx" />
+    <Content Include="AllWallets.aspx" />
+    <Content Include="AvgTransactionAmout.aspx" />
+    <Content Include="CashbackAmount.aspx" />
+    <Content Include="CashbackReturned.aspx" />
+    <Content Include="CustomerProfileDetails.aspx" />
     <Content Include="ExtraPlanAmount.aspx" />
     <Content Include="HighestVoucher.aspx" />
     <Content Include="Index.aspx" />
+    <Content Include="MobileNumberHasWallet.aspx" />
     <Content Include="Page1.aspx" />
+    <Content Include="RechargeBalance.aspx" />
+    <Content Include="RedeemVoucher.aspx" />
     <Content Include="RemainingPlanAmount.aspx" />
+    <Content Include="RemoveAllBenifitsOffered.aspx" />
+    <Content Include="SubscriptionRenewal.aspx" />
     <Content Include="TopSuccessfulPayments.aspx" />
+    <Content Include="TotalCashbackPerWallet.aspx" />
     <Content Include="TotalConsumption.aspx" />
+    <Content Include="TotalUsage.aspx" />
     <Content Include="UnresolvedTickets.aspx" />
     <Content Include="UnsubscribedPlans.aspx" />
+    <Content Include="UpdateEarnedPoints.aspx" />
     <Content Include="UserDashboard.aspx" />
     <Content Include="UserLogin.aspx" />
     <Content Include="WalletCashback.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AcceptedTransactionsLastYear.aspx.cs">
+      <DependentUpon>AcceptedTransactionsLastYear.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AcceptedTransactionsLastYear.aspx.designer.cs">
+      <DependentUpon>AcceptedTransactionsLastYear.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ActivePlanUsage.aspx.cs">
       <DependentUpon>ActivePlanUsage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -114,6 +144,104 @@
     <Compile Include="AllBenefits.aspx.designer.cs">
       <DependentUpon>AllBenefits.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AllCustomerInputPlan.aspx.cs">
+      <DependentUpon>AllCustomerInputPlan.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AllCustomerInputPlan.aspx.designer.cs">
+      <DependentUpon>AllCustomerInputPlan.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AllCustomersSubscribedPlan.aspx.cs">
+      <DependentUpon>AllCustomersSubscribedPlan.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AllCustomersSubscribedPlan.aspx.designer.cs">
+      <DependentUpon>AllCustomersSubscribedPlan.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AllE-Shops.aspx.cs">
+      <DependentUpon>AllE-Shops.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AllE-Shops.aspx.designer.cs">
+      <DependentUpon>AllE-Shops.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AllPaymentTransactions.aspx.cs">
+      <DependentUpon>AllPaymentTransactions.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AllPaymentTransactions.aspx.designer.cs">
+      <DependentUpon>AllPaymentTransactions.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AllPhysicalStores.aspx.cs">
+      <DependentUpon>AllPhysicalStores.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AllPhysicalStores.aspx.designer.cs">
+      <DependentUpon>AllPhysicalStores.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AllResolvedTickets.aspx.cs">
+      <DependentUpon>AllResolvedTickets.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AllResolvedTickets.aspx.designer.cs">
+      <DependentUpon>AllResolvedTickets.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AllServicePlans5Months.aspx.cs">
+      <DependentUpon>AllServicePlans5Months.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AllServicePlans5Months.aspx.designer.cs">
+      <DependentUpon>AllServicePlans5Months.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AllShopsDetails.aspx.cs">
+      <DependentUpon>AllShopsDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AllShopsDetails.aspx.designer.cs">
+      <DependentUpon>AllShopsDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AllSmsOffers.aspx.cs">
+      <DependentUpon>AllSmsOffers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AllSmsOffers.aspx.designer.cs">
+      <DependentUpon>AllSmsOffers.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AllWallets.aspx.cs">
+      <DependentUpon>AllWallets.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AllWallets.aspx.designer.cs">
+      <DependentUpon>AllWallets.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AvgTransactionAmout.aspx.cs">
+      <DependentUpon>AvgTransactionAmout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AvgTransactionAmout.aspx.designer.cs">
+      <DependentUpon>AvgTransactionAmout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CashbackAmount.aspx.cs">
+      <DependentUpon>CashbackAmount.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CashbackAmount.aspx.designer.cs">
+      <DependentUpon>CashbackAmount.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CashbackReturned.aspx.cs">
+      <DependentUpon>CashbackReturned.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CashbackReturned.aspx.designer.cs">
+      <DependentUpon>CashbackReturned.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerProfileDetails.aspx.cs">
+      <DependentUpon>CustomerProfileDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomerProfileDetails.aspx.designer.cs">
+      <DependentUpon>CustomerProfileDetails.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ExtraPlanAmount.aspx.cs">
       <DependentUpon>ExtraPlanAmount.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -135,6 +263,13 @@
     <Compile Include="Index.aspx.designer.cs">
       <DependentUpon>Index.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MobileNumberHasWallet.aspx.cs">
+      <DependentUpon>MobileNumberHasWallet.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MobileNumberHasWallet.aspx.designer.cs">
+      <DependentUpon>MobileNumberHasWallet.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Page1.aspx.cs">
       <DependentUpon>Page1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -143,12 +278,40 @@
       <DependentUpon>Page1.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RechargeBalance.aspx.cs">
+      <DependentUpon>RechargeBalance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RechargeBalance.aspx.designer.cs">
+      <DependentUpon>RechargeBalance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RedeemVoucher.aspx.cs">
+      <DependentUpon>RedeemVoucher.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RedeemVoucher.aspx.designer.cs">
+      <DependentUpon>RedeemVoucher.aspx</DependentUpon>
+    </Compile>
     <Compile Include="RemainingPlanAmount.aspx.cs">
       <DependentUpon>RemainingPlanAmount.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="RemainingPlanAmount.aspx.designer.cs">
       <DependentUpon>RemainingPlanAmount.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RemoveAllBenifitsOffered.aspx.cs">
+      <DependentUpon>RemoveAllBenifitsOffered.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RemoveAllBenifitsOffered.aspx.designer.cs">
+      <DependentUpon>RemoveAllBenifitsOffered.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SubscriptionRenewal.aspx.cs">
+      <DependentUpon>SubscriptionRenewal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SubscriptionRenewal.aspx.designer.cs">
+      <DependentUpon>SubscriptionRenewal.aspx</DependentUpon>
     </Compile>
     <Compile Include="TopSuccessfulPayments.aspx.cs">
       <DependentUpon>TopSuccessfulPayments.aspx</DependentUpon>
@@ -157,12 +320,26 @@
     <Compile Include="TopSuccessfulPayments.aspx.designer.cs">
       <DependentUpon>TopSuccessfulPayments.aspx</DependentUpon>
     </Compile>
+    <Compile Include="TotalCashbackPerWallet.aspx.cs">
+      <DependentUpon>TotalCashbackPerWallet.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TotalCashbackPerWallet.aspx.designer.cs">
+      <DependentUpon>TotalCashbackPerWallet.aspx</DependentUpon>
+    </Compile>
     <Compile Include="TotalConsumption.aspx.cs">
       <DependentUpon>TotalConsumption.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="TotalConsumption.aspx.designer.cs">
       <DependentUpon>TotalConsumption.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TotalUsage.aspx.cs">
+      <DependentUpon>TotalUsage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TotalUsage.aspx.designer.cs">
+      <DependentUpon>TotalUsage.aspx</DependentUpon>
     </Compile>
     <Compile Include="UnresolvedTickets.aspx.cs">
       <DependentUpon>UnresolvedTickets.aspx</DependentUpon>
@@ -177,6 +354,13 @@
     </Compile>
     <Compile Include="UnsubscribedPlans.aspx.designer.cs">
       <DependentUpon>UnsubscribedPlans.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateEarnedPoints.aspx.cs">
+      <DependentUpon>UpdateEarnedPoints.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UpdateEarnedPoints.aspx.designer.cs">
+      <DependentUpon>UpdateEarnedPoints.aspx</DependentUpon>
     </Compile>
     <Compile Include="UserDashboard.aspx.cs">
       <DependentUpon>UserDashboard.aspx</DependentUpon>
