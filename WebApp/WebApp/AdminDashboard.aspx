@@ -58,12 +58,12 @@
             <asp:Button ID="Button6" runat="server" Text="Total usage" CssClass="btn" PostBackUrl="TotalUsage.aspx" />
             <asp:Button ID="Button7" runat="server" Text="Remove all benefits offered" CssClass="btn" PostBackUrl="RemoveAllBenifitsOffered.aspx" />
             <asp:Button ID="Button8" runat="server" Text="All SMS offers" CssClass="btn" PostBackUrl="AllSMSOffers.aspx" />
-            <asp:Button ID="Button9" runat="server" Text="Page 9" CssClass="btn" PostBackUrl="Page9.aspx" />
-            <asp:Button ID="Button10" runat="server" Text="Page 10" CssClass="btn" PostBackUrl="Page10.aspx" />
-            <asp:Button ID="Button11" runat="server" Text="Page 11" CssClass="btn" PostBackUrl="Page11.aspx" />
-            <asp:Button ID="Button12" runat="server" Text="Page 12" CssClass="btn" PostBackUrl="Page12.aspx" />
+            <asp:Button ID="Button9" runat="server" Text="All wallets" CssClass="btn" PostBackUrl="Allwallets.aspx" />
+            <asp:Button ID="Button10" runat="server" Text="All e-shops " CssClass="btn" PostBackUrl="AllE-Shops.aspx" />
+            <asp:Button ID="Button11" runat="server" Text="All payment transactions" CssClass="btn" PostBackUrl="AllPaymentTransactions.aspx" />
+            <asp:Button ID="Button12" runat="server" Text="Total Cashback per wallet" CssClass="btn" PostBackUrl="TotalCashbackPerWallet.aspx" />
             <asp:Button ID="Button13" runat="server" Text="Page 13" CssClass="btn" PostBackUrl="Page13.aspx" />
-            <asp:Button ID="Button14" runat="server" Text="Page 14" CssClass="btn" PostBackUrl="Page14.aspx" />
+            <asp:Button ID="Button14" runat="server" Text="Cashback amount" CssClass="btn" PostBackUrl="CashbackAmount.aspx" />
             <asp:Button ID="Button15" runat="server" Text="Page 15" CssClass="btn" PostBackUrl="Page15.aspx" />
             <asp:Button ID="Button16" runat="server" Text="Page 16" CssClass="btn" PostBackUrl="Page16.aspx" />
             <asp:Button ID="Button17" runat="server" Text="Page 17" CssClass="btn" PostBackUrl="Page17.aspx" />
