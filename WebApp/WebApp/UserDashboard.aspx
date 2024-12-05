@@ -63,9 +63,10 @@
             <asp:Button ID="Button11" runat="server" Text="All Shops" CssClass="btn" PostBackUrl="AllShopsDetails.aspx" />
             <asp:Button ID="Button12" runat="server" Text="Past 5 Months Plans" CssClass="btn" PostBackUrl="ALlServicePlans5Months.aspx" />
             <asp:Button ID="Button13" runat="server" Text="Subscription Renewal" CssClass="btn" PostBackUrl="SubscriptionRenewal.aspx" />
-            <asp:Button ID="Button14" runat="server" Text="Page 14" CssClass="btn" PostBackUrl="Page14.aspx" />
-            <asp:Button ID="Button15" runat="server" Text="Page 15" CssClass="btn" PostBackUrl="Page15.aspx" />
-            <asp:Button ID="Button16" runat="server" Text="Page 16" CssClass="btn" PostBackUrl="Page16.aspx" />
+            <asp:Button ID="Button14" runat="server" Text="Cashback Amount" CssClass="btn" PostBackUrl="CashbackReturned.aspx" />
+            <asp:Button ID="Button15" runat="server" Text="Recharge Balance" CssClass="btn" PostBackUrl="RechargeBalance.aspx" />
+            <asp:Button ID="Button16" runat="server" Text="Redeem Voucher" CssClass="btn" PostBackUrl="RedeemVoucher.aspx" />
+            <asp:Button ID="Button16" runat="server" Text="Redeem Voucher" CssClass="btn" PostBackUrl="RedeemVoucher.aspx" />
         </div>
     </div>
     </form>
