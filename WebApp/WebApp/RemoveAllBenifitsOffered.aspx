@@ -69,11 +69,12 @@
     <div class="container">
         <h1>remove all benefits offered</h1>
         
+
+        <label for="mobileInput">Enter a Mobile Number:</label>
+        <asp:TextBox ID="mobileNo" runat="server" CssClass="input-text" />
+
         <label for="mobileInput">Enter a Plan id:</label>
         <asp:TextBox ID="Planid" runat="server" CssClass="input-text" />
-        
-       
-
 
         <asp:Button ID="SearchButton" runat="server" Text="Search" CssClass="btn" OnClick="SearchButton_Click" />
 
