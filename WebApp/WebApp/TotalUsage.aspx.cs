@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace WebApp
 {
@@ -11,7 +14,66 @@ namespace WebApp
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            
         }
+        protected void SearchButton_Click(object sender, EventArgs e)
+        {
+            if (Session["user"] != null)
+            {
+                string mobileNo = Session["user"].ToString();
+
+
+            }
+            else
+            {
+                Response.Write("<script>alert('User session not found. Please log in.');</script>");
+            }
+            string startDate = StartDateInput.Text.Trim();
+
+            // Validate input
+            if (string.IsNullOrEmpty(startDate))
+            {
+                ResultGrid.Visible = false;
+                Response.Write("<script>alert('Please provide all required inputs.');</script>");
+                return;
+            }
+
+            string connectionString = ConfigurationManager.ConnectionStrings["GUC_Telecom"].ConnectionString;
+
+            // Query to call the table-valued function
+            string query = "SELECT * FROM dbo.Account_Usage_Plan(@mobile_num, @from_date)";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.CommandType = CommandType.Text;  // Text because it's a SELECT query
+
+                // Pass parameters to the query
+                command.Parameters.AddWithValue("@mobile_num", Session["user"].ToString());
+                command.Parameters.AddWithValue("@from_date", DateTime.Parse(startDate));
+                
+
+                try
+                {
+                    connection.Open();
+
+                    // Fetch data using SqlDataAdapter
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    DataTable dataTable = new DataTable();
+                    adapter.Fill(dataTable);
+
+                    // Bind the results to the GridView
+                    ResultGrid.DataSource = dataTable;
+                    ResultGrid.DataBind();
+                    ResultGrid.Visible = true;
+                }
+                catch (Exception ex)
+                {
+                    ResultGrid.Visible = false;
+                    Response.Write($"<script>alert('Error: {ex.Message}');</script>");
+                }
+            }
+        }
+
     }
 }

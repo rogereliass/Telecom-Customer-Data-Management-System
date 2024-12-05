@@ -73,7 +73,7 @@
 
         <asp:GridView ID="ResultGrid" runat="server" CssClass="gridview" Visible="true" />
 
-        <asp:Button ID="ReturnButton" runat="server" Text="Return to Dashboard" CssClass="btn" PostBackUrl="UserDashboard.aspx" />
+        <asp:Button ID="ReturnButton" runat="server" Text="Return to Dashboard" CssClass="btn" PostBackUrl="AdminDashboard.aspx" />
     </div>
     </form>
 </body>

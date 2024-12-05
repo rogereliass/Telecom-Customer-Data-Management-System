@@ -54,10 +54,10 @@
             <asp:Button ID="Button2" runat="server" Text="Physical store vouchers" CssClass="btn" PostBackUrl="AllPhysicalStores.aspx" />
             <asp:Button ID="Button3" runat="server" Text=" Resolved Tickets" CssClass="btn" PostBackUrl="AllResolvedTickets.aspx" />
             <asp:Button ID="Button4" runat="server" Text="Customers subscribed plans" CssClass="btn" PostBackUrl="AllCustomersSubscribedPlan.aspx" />
-            <asp:Button ID="Button5" runat="server" Text="Page 5" CssClass="btn" PostBackUrl="Page5.aspx" />
-            <asp:Button ID="Button6" runat="server" Text="Page 6" CssClass="btn" PostBackUrl="Page6.aspx" />
-            <asp:Button ID="Button7" runat="server" Text="Page 7" CssClass="btn" PostBackUrl="Page7.aspx" />
-            <asp:Button ID="Button8" runat="server" Text="Page 8" CssClass="btn" PostBackUrl="Page8.aspx" />
+            <asp:Button ID="Button5" runat="server" Text="Plan's current customers " CssClass="btn" PostBackUrl="AllCustomerInputPlan.aspx" />
+            <asp:Button ID="Button6" runat="server" Text="Total usage" CssClass="btn" PostBackUrl="TotalUsage.aspx" />
+            <asp:Button ID="Button7" runat="server" Text="Remove all benefits offered" CssClass="btn" PostBackUrl="RemoveAllBenifitsOffered.aspx" />
+            <asp:Button ID="Button8" runat="server" Text="All SMS offers" CssClass="btn" PostBackUrl="AllSMSOffers.aspx" />
             <asp:Button ID="Button9" runat="server" Text="Page 9" CssClass="btn" PostBackUrl="Page9.aspx" />
             <asp:Button ID="Button10" runat="server" Text="Page 10" CssClass="btn" PostBackUrl="Page10.aspx" />
             <asp:Button ID="Button11" runat="server" Text="Page 11" CssClass="btn" PostBackUrl="Page11.aspx" />
