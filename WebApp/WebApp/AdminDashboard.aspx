@@ -62,11 +62,11 @@
             <asp:Button ID="Button10" runat="server" Text="All e-shops " CssClass="btn" PostBackUrl="AllE-Shops.aspx" />
             <asp:Button ID="Button11" runat="server" Text="All payment transactions" CssClass="btn" PostBackUrl="AllPaymentTransactions.aspx" />
             <asp:Button ID="Button12" runat="server" Text="Total Cashback per wallet" CssClass="btn" PostBackUrl="TotalCashbackPerWallet.aspx" />
-            <asp:Button ID="Button13" runat="server" Text="Page 13" CssClass="btn" PostBackUrl="Page13.aspx" />
+            <asp:Button ID="Button13" runat="server" Text="Accepted Transactions Last Year" CssClass="btn" PostBackUrl="AcceptedTransactionsLastYear.aspx" />
             <asp:Button ID="Button14" runat="server" Text="Cashback amount" CssClass="btn" PostBackUrl="CashbackAmount.aspx" />
-            <asp:Button ID="Button15" runat="server" Text="Page 15" CssClass="btn" PostBackUrl="Page15.aspx" />
-            <asp:Button ID="Button16" runat="server" Text="Page 16" CssClass="btn" PostBackUrl="Page16.aspx" />
-            <asp:Button ID="Button17" runat="server" Text="Page 17" CssClass="btn" PostBackUrl="Page17.aspx" />
+            <asp:Button ID="Button15" runat="server" Text="Average Transaction Amount" CssClass="btn" PostBackUrl="AvgTransactionAmout.aspx" />
+            <asp:Button ID="Button16" runat="server" Text="Mobile Number Has Wallet" CssClass="btn" PostBackUrl="MobileNumberHasWallet.aspx" />
+            <asp:Button ID="Button17" runat="server" Text="Update Earned Points" CssClass="btn" PostBackUrl="UpdateEarnedPoints.aspx" />
         </div>
     </div>
     </form>
