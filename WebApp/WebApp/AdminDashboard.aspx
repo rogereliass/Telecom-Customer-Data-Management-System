@@ -50,10 +50,10 @@
     <div class="container">
         <h1>Admin Dashboard</h1>
         <div class="grid">
-            <asp:Button ID="Button1" runat="server" Text="Page 1" CssClass="btn" PostBackUrl="Page1.aspx" />
-            <asp:Button ID="Button2" runat="server" Text="Page 2" CssClass="btn" PostBackUrl="Page2.aspx" />
-            <asp:Button ID="Button3" runat="server" Text="Page 3" CssClass="btn" PostBackUrl="Page3.aspx" />
-            <asp:Button ID="Button4" runat="server" Text="Page 4" CssClass="btn" PostBackUrl="Page4.aspx" />
+            <asp:Button ID="Button1" runat="server" Text="Customer profiles" CssClass="btn" PostBackUrl="CustomerProfileDetails.aspx" />
+            <asp:Button ID="Button2" runat="server" Text="Physical store vouchers" CssClass="btn" PostBackUrl="AllPhysicalStores.aspx" />
+            <asp:Button ID="Button3" runat="server" Text=" Resolved Tickets" CssClass="btn" PostBackUrl="AllResolvedTickets.aspx" />
+            <asp:Button ID="Button4" runat="server" Text="Customers subscribed plans" CssClass="btn" PostBackUrl="AllCustomersSubscribedPlan.aspx" />
             <asp:Button ID="Button5" runat="server" Text="Page 5" CssClass="btn" PostBackUrl="Page5.aspx" />
             <asp:Button ID="Button6" runat="server" Text="Page 6" CssClass="btn" PostBackUrl="Page6.aspx" />
             <asp:Button ID="Button7" runat="server" Text="Page 7" CssClass="btn" PostBackUrl="Page7.aspx" />
