@@ -42,6 +42,7 @@ namespace WebApp
                 command.Parameters.AddWithValue("@payment_method", paymentMethod);
                 command.Parameters.AddWithValue("@plan_id", planID);
 
+
                 try
                 {
                     connection.Open();
