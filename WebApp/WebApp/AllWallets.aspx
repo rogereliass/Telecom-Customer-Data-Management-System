@@ -20,7 +20,7 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 80%;
+            width: 95%;
         }
         h1 {
             margin-bottom: 20px;
@@ -67,7 +67,7 @@
 <body>
     <form id="form27" runat="server">
     <div class="container">
-        <h1>Get all wallets </h1>
+        <h1>All Wallets Details </h1>
         
 
         <asp:GridView ID="ResultGrid" runat="server" CssClass="gridview" Visible="true" />

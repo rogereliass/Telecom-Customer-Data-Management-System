@@ -661,7 +661,7 @@ go
 ------------------------- Update the total number of points that the input account should have--------------------------
 
 go
-CREATE PROCEDURE [Total_Points_Account]
+CREATE PROCEDURE [Total_Points_Account]  --NOTE: NOT ALIGNED WITH MILESTONE _ NO OUTPUT
 @mobile_num char(11)  
 
 AS
@@ -1056,7 +1056,7 @@ print @result
 -------------------[Wallet_MobileNo] function execution---------------------------------------------------------------------------------
 
 declare @result bit
-set @result = dbo.Wallet_MobileNo('01234567891')
+set @result = dbo.Wallet_MobileNo('01234567890')
 print @result
 
 -----------------------Total_Points_Account Procedure execution----------------------------------
@@ -1373,6 +1373,12 @@ VALUES
 
 GO
 
+--TESTING DATA QUERIES
+SELECT points FROM customer_account WHERE mobileNo = 01234567893;
+
+UPDATE customer_account
+SET points = 100
+WHERE mobileNo = 01234567890;
 
 
 select * from dbo.Usage_Plan_CurrentMonth ('01234567893')

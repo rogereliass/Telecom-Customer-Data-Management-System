@@ -18,7 +18,6 @@ namespace WebApp
 
             if (string.IsNullOrEmpty(national_id))
             {
-                ResultGrid.Visible = false;
                 ResultLabel.Text = "Please provide a valid National ID.";
                 ResultLabel.ForeColor = System.Drawing.Color.Red; 
                 return;
@@ -52,7 +51,7 @@ namespace WebApp
                         ResultLabel.ForeColor = System.Drawing.Color.Orange;
                     }
 
-                    ResultGrid.Visible = false; 
+                    
                 }
                 catch (Exception ex)
                 {

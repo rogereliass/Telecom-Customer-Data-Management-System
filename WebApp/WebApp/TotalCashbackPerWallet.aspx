@@ -1,4 +1,4 @@
-﻿<%--<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="TotalCashbackPerWallet.aspx.cs" Inherits="WebApp.TotalCashbackPerWallet" %>--%>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="TotalCashbackPerWallet.aspx.cs" Inherits="WebApp.TotalCashbackPerWallet" %>
 
 <!DOCTYPE html>
 <html>
@@ -67,21 +67,14 @@
 <body>
     <form id="form32" runat="server">
     <div class="container">
-        <h1>Get total cashback per wallet </h1>
+        <h1>Get Total Cashback Per Wallet ID </h1>
         
-        <label for="mobileInput">Enter a Plan Name:</label>
-        <asp:TextBox ID="PlanN" runat="server" CssClass="input-text" />
         
-        <label for="dateInput">Select a Start Date:</label>
-        <asp:TextBox ID="StartDateInput" runat="server" CssClass="input-text" TextMode="Date" />
-
-        <label for="dateInput">Select an End Date:</label>
-        <asp:TextBox ID="EndDateInput" runat="server" CssClass="input-text" TextMode="Date" />
+        <div class="grid-container">
+            <asp:GridView ID="ResultGrid" runat="server" CssClass="gridview" Visible="true" />
+        </div>
 
 
-        <asp:Button ID="SearchButton" runat="server" Text="Search" CssClass="btn" OnClick="SearchButton_Click" />
-
-        <asp:GridView ID="ResultGrid" runat="server" CssClass="gridview" Visible="true" />
 
         <asp:Button ID="ReturnButton" runat="server" Text="Return to Dashboard" CssClass="btn" PostBackUrl="AdminDashboard.aspx" />
     </div>

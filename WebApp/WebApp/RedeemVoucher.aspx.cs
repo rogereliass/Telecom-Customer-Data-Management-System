@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Text;
 
 namespace WebApp
 {
@@ -81,6 +82,7 @@ namespace WebApp
                         ResultLabel.ForeColor = System.Drawing.Color.Green;
 
                     }
+                }
                 catch (Exception ex)
                 {
                     ResultLabel.Text = $"Error: {ex.Message}";
@@ -93,7 +95,7 @@ namespace WebApp
             bool isValid = true;
             string errorMessage = string.Empty;
 
-            if (string.IsNullOrEmpty(VoucherIDTextBox.Text.Trim()) || !int.TryParse(VoucherDTextBox.Text.Trim(), out _))
+            if (string.IsNullOrEmpty(VoucherIDTextBox.Text.Trim()) || !int.TryParse(VoucherIDTextBox.Text.Trim(), out _))
             {
                 errorMessage += "Voucher ID must be a valid integer.<br/>";
                 isValid = false;

@@ -53,7 +53,6 @@ namespace WebApp
                         ResultLabel.ForeColor = System.Drawing.Color.Orange;
                     }
 
-                    ResultGrid.Visible = false;
                 }
                 catch (Exception ex)
                 {

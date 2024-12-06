@@ -20,7 +20,7 @@
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 350px;
+            width: 400px;
         }
         h1 {
             font-size: 1.5em;
@@ -66,13 +66,20 @@
 
             <label for="MobileNoTextBox">MobileNo:</label>
             <asp:TextBox ID="MobileNoTextBox" runat="server" CssClass="input" TextMode="Number" />
+            <div>
+                  <asp:Label ID="ResultLabel" runat="server" CssClass="result-label" Text="" />
+            </div>
 
             <div>
             <asp:Button ID="SearchButton" runat="server" Text="Search" CssClass="btn" OnClick="SearchButton_Click" />
             </div>
-            <asp:Button ID="ReturnButton" runat="server" Text="Return to Dashboard" CssClass="btn" PostBackUrl="UserDashboard.aspx" />
+
             
-            <asp:Label ID="ResultLabel" runat="server" CssClass="result-label" Text="" />
+            <div class="grid-container">
+                  <asp:GridView ID="ResultGrid" runat="server" CssClass="gridview" Visible="true" />
+            </div>
+            <asp:Button ID="ReturnButton" runat="server" Text="Return to Dashboard" CssClass="btn" PostBackUrl="AdminDashboard.aspx" />
+            
         </div>
     </form>
 </body>

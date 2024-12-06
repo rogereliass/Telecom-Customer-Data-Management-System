@@ -14,7 +14,7 @@ namespace WebApp
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            tring connectionString = ConfigurationManager.ConnectionStrings["GUC_Telecom"].ConnectionString;
+            String connectionString = ConfigurationManager.ConnectionStrings["GUC_Telecom"].ConnectionString;
 
             string query = "SELECT * FROM E_shopVouchers";
 

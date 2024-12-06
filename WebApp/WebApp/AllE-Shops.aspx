@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title> All e-shops </title>
+    <title> All E-Shops </title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -20,7 +20,7 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 80%;
+            width: 90%;
         }
         h1 {
             margin-bottom: 20px;
@@ -67,7 +67,7 @@
 <body>
     <form id="form29" runat="server">
     <div class="container">
-        <h1>Get all e-shops </h1>
+        <h1>All E-Shops Details </h1>
         
        
 

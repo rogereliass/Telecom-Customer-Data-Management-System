@@ -38,7 +38,7 @@ namespace WebApp
             string storedProcedure = "Payment_wallet_cashback";
 
             string paymentID = PaymentIDTextBox.Text.Trim();
-            string benefitID = BenefitIDTextBox.Text.Trim();
+            string benefitID = BenefitTextBox.Text.Trim();
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -77,7 +77,7 @@ namespace WebApp
                 isValid = false;
             }
 
-            if (string.IsNullOrEmpty(BenefitIDTextBox.Text.Trim()) || !int.TryParse(BenefitIDTextBox.Text.Trim(), out _))
+            if (string.IsNullOrEmpty(BenefitTextBox.Text.Trim()) || !int.TryParse(BenefitTextBox.Text.Trim(), out _))
             {
                 errorMessage += "Benefit ID must be a valid integer.<br/>";
                 isValid = false;

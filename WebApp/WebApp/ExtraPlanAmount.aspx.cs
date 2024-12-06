@@ -31,7 +31,6 @@ namespace WebApp
 
             if (string.IsNullOrEmpty(planName))
             {
-                ResultGrid.Visible = false;
                 Response.Write("<script>alert('Please provide all required inputs.');</script>");
                 return;
             }
@@ -64,7 +63,6 @@ namespace WebApp
                         ResultLabel.ForeColor = System.Drawing.Color.Orange;
                     }
 
-                    ResultGrid.Visible = false;
                 }
                 catch (Exception ex)
                 {

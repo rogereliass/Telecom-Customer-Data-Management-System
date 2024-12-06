@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title> All Benefits</title>
+    <title>All Benefits</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,22 +12,30 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f4f4f4;
+            min-height: 100vh;
+            background: linear-gradient(to bottom right, #004080, #e6f2ff);
         }
         .container {
             text-align: center;
             background-color: #ffffff;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 80%;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: 90vh;
         }
         h1 {
             margin-bottom: 20px;
+            color: #004080;
+            font-size: 2.5em;
         }
         .btn {
             padding: 10px 20px;
-            background-color: #007bff;
+            background-color: #004080;
             color: white;
             border: none;
             border-radius: 5px;
@@ -35,22 +43,41 @@
             cursor: pointer;
             text-align: center;
             margin-top: 20px;
+            width: 100%;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
         .btn:hover {
-            background-color: #0056b3;
+            background-color: #0066cc;
+            transform: scale(1.05);
+        }
+        .btn:active {
+            background-color: #003366;
+            transform: scale(0.95);
+        }
+        .grid-container {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: auto;
+            height: 500px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
         }
         .gridview {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            table-layout: auto;
         }
         .gridview th, .gridview td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
+            font-size: 14px;
         }
         .gridview th {
-            background-color: #007bff;
+            background-color: #004080;
             color: white;
         }
         .gridview tr:nth-child(even) {
@@ -66,14 +93,15 @@
 </head>
 <body>
     <form id="form10" runat="server">
-    <div class="container">
-        <h1>Get All Available Benefits</h1>
-        
+        <div class="container">
+            <h1>Get All Available Benefits</h1>
+            
+            <div class="grid-container">
+                <asp:GridView ID="ResultGrid" runat="server" CssClass="gridview" Visible="true" />
+            </div>
 
-        <asp:GridView ID="ResultGrid" runat="server" CssClass="gridview" Visible="true" />
-
-        <asp:Button ID="ReturnButton" runat="server" Text="Return to Dashboard" CssClass="btn" PostBackUrl="UserDashboard.aspx" />
-    </div>
+            <asp:Button ID="ReturnButton" runat="server" Text="Return to Dashboard" CssClass="btn" PostBackUrl="UserDashboard.aspx" />
+        </div>
     </form>
 </body>
 </html>

@@ -74,11 +74,13 @@
             <asp:TextBox ID="EndDateInput" runat="server" CssClass="input-text" TextMode="Date" />
 
             <div>
+            <asp:Label ID="ResultLabel" runat="server" CssClass="result-label" Text="" /></div>
+            <div>
+
             <asp:Button ID="SearchButton" runat="server" Text="Retrieve" CssClass="btn" OnClick="SearchButton_Click" />
             </div>
-            <asp:Button ID="ReturnButton" runat="server" Text="Return to Dashboard" CssClass="btn" PostBackUrl="UserDashboard.aspx" />
+            <asp:Button ID="ReturnButton" runat="server" Text="Return to Dashboard" CssClass="btn" PostBackUrl="AdminDashboard.aspx" />
             
-            <asp:Label ID="ResultLabel" runat="server" CssClass="result-label" Text="" />
         </div>
     </form>
 </body>

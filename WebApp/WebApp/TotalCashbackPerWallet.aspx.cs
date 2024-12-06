@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
 
 namespace WebApp
 {
     public partial class TotalCashbackPerWallet : System.Web.UI.Page
     {
+
         protected void Page_Load(object sender, EventArgs e)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["GUC_Telecom"].ConnectionString;
@@ -32,6 +33,7 @@ namespace WebApp
                     ResultGrid.DataSource = dataTable;
                     ResultGrid.DataBind();
                     ResultGrid.Visible = true;
+
                 }
                 catch (Exception ex)
                 {
@@ -39,5 +41,6 @@ namespace WebApp
                 }
             }
         }
+
     }
 }

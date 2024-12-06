@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace WebApp
 {
@@ -12,24 +11,28 @@ namespace WebApp
         protected void Page_Load(object sender, EventArgs e)
         {
 
-
         }
 
         protected void SearchButton_Click(object sender, EventArgs e)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["GUC_Telecom"].ConnectionString;
-            string query = "SELECT dbo.Wallet_MobileNo(@mobile_num)";
+            string query = "SELECT dbo.Wallet_MobileNo(@mobile_num) AS HasWallet";
 
-            string mobileno = MobileNoTextBox.Text.Trim();
+            string mobileNo = MobileNoTextBox.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(mobileNo) || mobileNo.Length != 11)
+            {
+                ResultLabel.Text = "Please enter a valid 11-digit mobile number.";
+                ResultLabel.ForeColor = System.Drawing.Color.Red;
+                return;
+            }
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
                 command.CommandType = CommandType.Text;
 
-                // Pass parameters
-                command.Parameters.AddWithValue("@mobile_num", mobileno);
-
+                command.Parameters.AddWithValue("@mobile_num", mobileNo);
 
                 try
                 {
@@ -37,16 +40,16 @@ namespace WebApp
 
                     object result = command.ExecuteScalar();
 
-                    if (result != null && int.TryParse(result.ToString(), out int hasAwallet))
+                    if (result != null && result != DBNull.Value && bool.TryParse(result.ToString(), out bool hasWallet))
                     {
-                        if (hasAwallet == 1)
+                        if (hasWallet)
                         {
-                            ResultLabel.Text = $"Yes it is linked to a wallet";
+                            ResultLabel.Text = "Yes, it is linked to a wallet.";
                             ResultLabel.ForeColor = System.Drawing.Color.Green;
                         }
                         else
                         {
-                            ResultLabel.Text = "No Wallet";
+                            ResultLabel.Text = "No Wallet.";
                             ResultLabel.ForeColor = System.Drawing.Color.Orange;
                         }
                     }
@@ -55,12 +58,10 @@ namespace WebApp
                         ResultLabel.Text = "No Wallet.";
                         ResultLabel.ForeColor = System.Drawing.Color.Orange;
                     }
-
-                    ResultGrid.Visible = false;
                 }
                 catch (Exception ex)
                 {
-                    ResultLabel.Text = "An error occurred while fetching is theis mobile number has a wallet.";
+                    ResultLabel.Text = "An error occurred while fetching data.";
                     ResultLabel.ForeColor = System.Drawing.Color.Red;
 
                     System.Diagnostics.Trace.WriteLine($"Error: {ex.Message}");

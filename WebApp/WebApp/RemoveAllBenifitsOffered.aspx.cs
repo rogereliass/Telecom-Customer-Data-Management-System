@@ -17,8 +17,8 @@ namespace WebApp
         }
         protected void SearchButton_Click(object sender, EventArgs e)
         {
-            string mobileNum = mobileNo.Text.Trim();
-            string planId = Planid.Text.Trim();
+            string mobileNum = mobileNo.Text;
+            string planId = Planid.Text;
             
 
             if (string.IsNullOrEmpty(planId) || string.IsNullOrEmpty(mobileNum))
@@ -40,7 +40,7 @@ namespace WebApp
 
                 // Pass parameters
                 command.Parameters.AddWithValue("@plan_id", planId);
-                command.Parameters.AddWithValue("@mobile_num", mobileNo);
+                command.Parameters.AddWithValue("@mobile_num", mobileNum);
                 
 
                 try

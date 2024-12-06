@@ -68,11 +68,13 @@
             <asp:TextBox ID="MobileNoTextBox" runat="server" CssClass="input" TextMode="Number" />
 
             <div>
+            <asp:Label ID="ResultLabel" runat="server" CssClass="result-label" Text="" /></div>
+            <div>
+
             <asp:Button ID="SearchButton" runat="server" Text="Search" CssClass="btn" OnClick="SearchButton_Click" />
             </div>
-            <asp:Button ID="ReturnButton" runat="server" Text="Return to Dashboard" CssClass="btn" PostBackUrl="UserDashboard.aspx" />
+            <asp:Button ID="ReturnButton" runat="server" Text="Return to Dashboard" CssClass="btn" PostBackUrl="AdminDashboard.aspx" />
             
-            <asp:Label ID="ResultLabel" runat="server" CssClass="result-label" Text="" />
         </div>
     </form>
 </body>

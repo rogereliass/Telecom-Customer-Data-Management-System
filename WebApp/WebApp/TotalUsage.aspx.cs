@@ -16,55 +16,72 @@ namespace WebApp
         {
             
         }
+
+
         protected void SearchButton_Click(object sender, EventArgs e)
         {
             string mobileNum = mobileNo.Text.Trim();
             string startDate = StartDateInput.Text.Trim();
 
-            // Validate input
+            // Clear the label text at the beginning of the search
+            UsageTextBox.Text = "";
+
             if (string.IsNullOrEmpty(startDate) || string.IsNullOrEmpty(mobileNum))
             {
                 ResultGrid.Visible = false;
-                Response.Write("<script>alert('Please provide all required inputs.');</script>");
+                UsageTextBox.Text = "Please provide all required inputs.";
+                UsageTextBox.ForeColor = System.Drawing.Color.Red;
+                UsageTextBox.Visible = true;
                 return;
             }
 
             string connectionString = ConfigurationManager.ConnectionStrings["GUC_Telecom"].ConnectionString;
-
-            // Query to call the table-valued function
             string query = "SELECT * FROM dbo.Account_Usage_Plan(@mobile_num, @from_date)";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
-                command.CommandType = CommandType.Text;  // Text because it's a SELECT query
+                command.CommandType = CommandType.Text;
 
-                // Pass parameters to the query
                 command.Parameters.AddWithValue("@mobile_num", mobileNum);
                 command.Parameters.AddWithValue("@from_date", DateTime.Parse(startDate));
-                
 
                 try
                 {
                     connection.Open();
-
-                    // Fetch data using SqlDataAdapter
                     SqlDataAdapter adapter = new SqlDataAdapter(command);
                     DataTable dataTable = new DataTable();
                     adapter.Fill(dataTable);
 
-                    // Bind the results to the GridView
                     ResultGrid.DataSource = dataTable;
                     ResultGrid.DataBind();
                     ResultGrid.Visible = true;
+
+                    if (dataTable.Rows.Count > 0)
+                    {
+                        UsageTextBox.Text = "Data available Below";
+                        UsageTextBox.ForeColor = System.Drawing.Color.Green;
+                    }
+                    else
+                    {
+                        UsageTextBox.Text = "No data available";
+                        UsageTextBox.ForeColor = System.Drawing.Color.Red;
+                    }
+
+                    UsageTextBox.Visible = true;
                 }
                 catch (Exception ex)
                 {
                     ResultGrid.Visible = false;
-                    Response.Write($"<script>alert('Error: {ex.Message}');</script>");
+                    UsageTextBox.Text = $"Error: {ex.Message}";
+                    UsageTextBox.ForeColor = System.Drawing.Color.Red;
+                    UsageTextBox.Visible = true;
                 }
             }
         }
+
+
+
 
     }
 }

@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title> All payment transactions </title>
+    <title> All Payment Transactions </title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,6 +12,7 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            min-height: 100vh; /*extra*/
             background-color: #f4f4f4;
         }
         .container {
@@ -20,7 +21,12 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 80%;
+            width: 99%; 
+             max-width: 1600px; /* Prevent it from becoming too wide */
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: 80vh;
         }
         h1 {
             margin-bottom: 20px;
@@ -30,7 +36,7 @@
             background-color: #007bff;
             color: white;
             border: none;
-            border-radius: 5px;
+         border-radius: 5px;
             font-size: 1em;
             cursor: pointer;
             text-align: center;
@@ -39,15 +45,24 @@
         .btn:hover {
             background-color: #0056b3;
         }
+        /*extra*/
+        .grid-container{
+             flex: 1; /* Use remaining space for grid */
+            overflow-y: auto; /* Enable vertical scrolling */
+            overflow-x: auto; /* Enable horizontal scrolling */
+            border: 1px solid #ddd;
+        }
         .gridview {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            table-layout: auto; /*extra*/
         }
         .gridview th, .gridview td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
+    
         }
         .gridview th {
             background-color: #007bff;
@@ -67,21 +82,12 @@
 <body>
     <form id="form31" runat="server">
     <div class="container">
-        <h1>Get all payment transactions </h1>
+        <h1>All Payment Transactions</h1>
         
-        <label for="mobileInput">Enter a Plan Name:</label>
-        <asp:TextBox ID="PlanN" runat="server" CssClass="input-text" />
-        
-        <label for="dateInput">Select a Start Date:</label>
-        <asp:TextBox ID="StartDateInput" runat="server" CssClass="input-text" TextMode="Date" />
+         <div class="grid-container">
+            <asp:GridView ID="ResultGrid" runat="server" CssClass="gridview" Visible="true" />
+         </div>
 
-        <label for="dateInput">Select an End Date:</label>
-        <asp:TextBox ID="EndDateInput" runat="server" CssClass="input-text" TextMode="Date" />
-
-
-        <asp:Button ID="SearchButton" runat="server" Text="Search" CssClass="btn" OnClick="SearchButton_Click" />
-
-        <asp:GridView ID="ResultGrid" runat="server" CssClass="gridview" Visible="true" />
 
         <asp:Button ID="ReturnButton" runat="server" Text="Return to Dashboard" CssClass="btn" PostBackUrl="AdminDashboard.aspx" />
     </div>

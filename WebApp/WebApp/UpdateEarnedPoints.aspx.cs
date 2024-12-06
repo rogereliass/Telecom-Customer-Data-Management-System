@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace WebApp
 {
@@ -11,7 +10,6 @@ namespace WebApp
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
 
         }
 
@@ -22,33 +20,42 @@ namespace WebApp
 
             string mobileno = MobileNoTextBox.Text.Trim();
 
+            if (string.IsNullOrWhiteSpace(mobileno) || mobileno.Length != 11)
+            {
+                ResultLabel.Text = "Please enter a valid 11-digit mobile number.";
+                ResultLabel.ForeColor = System.Drawing.Color.Red;
+                return;
+            }
+
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlCommand command = new SqlCommand(storedProcedure, connection);
-                command.CommandType = CommandType.StoredProcedure;
-
-                // Pass parameters
-                command.Parameters.AddWithValue("@mobile_num", mobileno);
-
                 try
                 {
+                    // Execute the stored procedure
+                    SqlCommand command = new SqlCommand(storedProcedure, connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@mobile_num", mobileno);
+
                     connection.Open();
+                    command.ExecuteNonQuery();
 
+                    // Retrieve the updated points
+                    string query = "SELECT points FROM customer_account WHERE mobileNo = @mobile_num";
+                    SqlCommand retrieveCommand = new SqlCommand(query, connection);
+                    retrieveCommand.Parameters.AddWithValue("@mobile_num", mobileno);
 
-                    object result = command.ExecuteScalar();
+                    object result = retrieveCommand.ExecuteScalar();
 
                     if (result != null && int.TryParse(result.ToString(), out int totalPoints))
                     {
-                        ResultLabel.Text = $"Number of unresolved tickets: {totalPoints}";
+                        ResultLabel.Text = $"Total Amount of Points: {totalPoints}";
                         ResultLabel.ForeColor = System.Drawing.Color.Green;
                     }
                     else
                     {
-                        ResultLabel.Text = "No Points.";
+                        ResultLabel.Text = "No points found for the provided mobile number.";
                         ResultLabel.ForeColor = System.Drawing.Color.Orange;
                     }
-
-                    ResultGrid.Visible = false;
                 }
                 catch (Exception ex)
                 {
@@ -59,5 +66,7 @@ namespace WebApp
                 }
             }
         }
+
+
     }
 }

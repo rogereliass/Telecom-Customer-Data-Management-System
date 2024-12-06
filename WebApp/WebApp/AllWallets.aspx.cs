@@ -38,7 +38,8 @@ namespace WebApp
                         Response.Write($"<script>alert('Error: {ex.Message}');</script>");
                     }
                 }
-            }
         }
-            }
     }
+            
+}
+
