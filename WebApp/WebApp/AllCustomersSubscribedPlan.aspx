@@ -3,95 +3,127 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title> Customer accounts and their subscribed plans </title>
+    <title>Customer Accounts and Their Subscribed Plans</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
-            min-height: 100vh; 
-            background-color: #f4f4f4;
+            background: linear-gradient(to bottom right, #004080, #e6f2ff); /* Gradient for consistency */
+            color: #333;
         }
+
         .container {
             text-align: center;
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 90%;  
-             max-width: 1200px; 
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            width: 95%;
+            max-width: 1400px;
             display: flex;
             flex-direction: column;
             gap: 20px;
-            height: 80vh;
+            height: auto;
+            margin: 0 auto;
         }
+
         h1 {
-            margin-bottom: 20px;
+            font-size: 2.2em;
+            margin-bottom: 15px;
+            color: #004080; /* Deep blue header */
         }
-        .btn {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-         border-radius: 5px;
-            font-size: 1em;
-            cursor: pointer;
-            text-align: center;
-            margin-top: 20px;
-        }
-        .btn:hover {
-            background-color: #0056b3;
-        }
-       
-        .grid-container{
-             flex: 1; 
-            overflow-y: auto; 
-            overflow-x: auto; 
+
+        .grid-container {
+            flex: 1;
+            overflow-y: auto; /* For scrollable content */
+            overflow-x: auto; /* For wide tables */
             border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            padding: 10px;
         }
+
         .gridview {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
-            table-layout: auto; 
+            table-layout: auto; /* Dynamic column width */
         }
+
         .gridview th, .gridview td {
             border: 1px solid #ddd;
-            padding: 8px;
+            padding: 12px;
             text-align: left;
-    
+            word-wrap: break-word; /* Prevents overflow */
         }
+
         .gridview th {
-            background-color: #007bff;
+            background-color: #004080; /* Consistent deep blue */
             color: white;
+            font-size: 1em;
         }
+
         .gridview tr:nth-child(even) {
             background-color: #f2f2f2;
         }
+
         .gridview tr:hover {
             background-color: #ddd;
         }
+
         .gridview td {
             font-size: 14px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            background-color: #004080;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            margin-top: 20px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0066cc; /* Lighter blue on hover */
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                font-size: 1em;
+            }
+
+            .container {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
     <form id="form21" runat="server">
-    <div class="container">
-        <h1>Get customers' plan </h1>
-        
-        <div class="grid-container">
-            <asp:GridView ID="ResultGrid" runat="server" CssClass="gridview" Visible="true" />
-        </div>
+        <div class="container">
+            <h1>Customer Accounts and Their Subscribed Plans</h1>
+            
+            <div class="grid-container">
+                <asp:GridView ID="ResultGrid" runat="server" CssClass="gridview" Visible="true" />
+            </div>
 
-        <asp:Button ID="ReturnButton" runat="server" Text="Return to Dashboard" CssClass="btn" PostBackUrl="AdminDashboard.aspx" />
-    </div>
+            <asp:Button ID="ReturnButton" runat="server" Text="Return to Dashboard" CssClass="btn" PostBackUrl="AdminDashboard.aspx" />
+        </div>
     </form>
 </body>
 </html>
-
-

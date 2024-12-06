@@ -3,69 +3,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title> All Payment Transactions </title>
+    <title>All Payment Transactions</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            min-height: 100vh; /*extra*/
-            background-color: #f4f4f4;
+            background: linear-gradient(to bottom right, #004080, #e6f2ff);
         }
         .container {
             text-align: center;
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 99%; 
-             max-width: 1600px; /* Prevent it from becoming too wide */
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            width: 85%;
+            max-width: 1600px;
             display: flex;
             flex-direction: column;
             gap: 20px;
-            height: 80vh;
+            height: 85vh;
+            margin: 0 auto; /* Ensures it stays centered horizontally */
         }
         h1 {
-            margin-bottom: 20px;
+            font-size: 2.5em;
+            color: #004080;
         }
-        .btn {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-         border-radius: 5px;
-            font-size: 1em;
-            cursor: pointer;
-            text-align: center;
-            margin-top: 20px;
-        }
-        .btn:hover {
-            background-color: #0056b3;
-        }
-        /*extra*/
-        .grid-container{
-             flex: 1; /* Use remaining space for grid */
-            overflow-y: auto; /* Enable vertical scrolling */
-            overflow-x: auto; /* Enable horizontal scrolling */
+        .grid-container {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: auto;
             border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            padding: 10px;
         }
         .gridview {
             width: 100%;
+            min-width: 1200px;
+            max-width: 1700px;
             border-collapse: collapse;
-            margin-top: 20px;
-            table-layout: auto; /*extra*/
+            table-layout: auto;
         }
         .gridview th, .gridview td {
             border: 1px solid #ddd;
-            padding: 8px;
+            padding: 12px;
             text-align: left;
-    
         }
         .gridview th {
-            background-color: #007bff;
+            background-color: #004080;
             color: white;
         }
         .gridview tr:nth-child(even) {
@@ -77,20 +66,34 @@
         .gridview td {
             font-size: 14px;
         }
+        .btn {
+            padding: 15px 30px;
+            background-color: #004080;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            text-transform: uppercase;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #0066cc;
+            transform: translateY(-3px);
+        }
     </style>
 </head>
 <body>
     <form id="form31" runat="server">
-    <div class="container">
-        <h1>All Payment Transactions</h1>
-        
-         <div class="grid-container">
-            <asp:GridView ID="ResultGrid" runat="server" CssClass="gridview" Visible="true" />
-         </div>
-
-
-        <asp:Button ID="ReturnButton" runat="server" Text="Return to Dashboard" CssClass="btn" PostBackUrl="AdminDashboard.aspx" />
-    </div>
+        <div class="container">
+            <h1>All Payment Transactions</h1>
+            <div class="grid-container">
+                <asp:GridView ID="ResultGrid" runat="server" CssClass="gridview" Visible="true" />
+            </div>
+            <asp:Button ID="ReturnButton" runat="server" Text="Return to Dashboard" CssClass="btn" PostBackUrl="AdminDashboard.aspx" />
+        </div>
     </form>
 </body>
 </html>

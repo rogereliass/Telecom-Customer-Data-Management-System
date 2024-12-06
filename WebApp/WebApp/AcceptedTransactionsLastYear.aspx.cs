@@ -63,8 +63,7 @@ namespace WebApp
                         ResultLabel.ForeColor = System.Drawing.Color.Red;
                     }
 
-                    // Optionally hide the result grid (or show/hide based on other conditions)
-                    ResultGrid.Visible = false;
+                    
                 }
                 catch (Exception ex)
                 {

@@ -1382,3 +1382,4 @@ WHERE mobileNo = 01234567890;
 
 
 select * from dbo.Usage_Plan_CurrentMonth ('01234567893')
+SELECT * from dbo.Wallet_Cashback_Amount(2,2);

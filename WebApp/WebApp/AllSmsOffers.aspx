@@ -3,99 +3,169 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title> All SMS offers </title>
+    <title>All SMS Offers</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
             margin: 0;
-            min-height: 100vh; 
-            background-color: #f4f4f4;
+            height: 100vh;
+            background: linear-gradient(to bottom right, #004080, #e6f2ff); /* Adjusted background color */
+            overflow-y: auto; /* Allowing the page to scroll if needed */
         }
+
         .container {
             text-align: center;
             background-color: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 90%;  
-             max-width: 1200px; 
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 1200px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px; /* Reduced gap between input elements */
             height: 80vh;
         }
+
         h1 {
-            margin-bottom: 20px;
+            margin-bottom: 15px; /* Reduced margin */
+            font-size: 2.5em;
+            color: #004080;
         }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .input-text {
+            width: 90%;
+            padding: 10px;
+            margin: 5px 0; /* Reduced margin */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+
         .btn {
-            padding: 10px 20px;
-            background-color: #007bff;
+            padding: 15px 30px;
+            background-color: #004080;
             color: white;
             border: none;
-         border-radius: 5px;
-            font-size: 1em;
+            border-radius: 8px;
             cursor: pointer;
-            text-align: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background-color: #0066cc;
+            transform: scale(1.05);
+        }
+
+        .btn:active {
+            background-color: #003366;
+            transform: scale(0.95);
+        }
+
+        .grid-container {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            padding: 10px;
             margin-top: 20px;
         }
-        .btn:hover {
-            background-color: #0056b3;
-        }
-       
-        .grid-container{
-             flex: 1; 
-            overflow-y: auto; 
-            overflow-x: auto; 
-            border: 1px solid #ddd;
-        }
+
         .gridview {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
-            table-layout: auto; 
+            table-layout: auto;
         }
+
         .gridview th, .gridview td {
             border: 1px solid #ddd;
-            padding: 8px;
+            padding: 12px;
             text-align: left;
-    
         }
+
         .gridview th {
-            background-color: #007bff;
+            background-color: #004080;
             color: white;
+            font-size: 1em;
         }
+
         .gridview tr:nth-child(even) {
             background-color: #f2f2f2;
         }
+
         .gridview tr:hover {
             background-color: #ddd;
         }
+
         .gridview td {
             font-size: 14px;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .btn {
+                padding: 12px 25px;
+                font-size: 1.1em;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                width: 100%;
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
         }
     </style>
 </head>
 <body>
     <form id="form26" runat="server">
-    <div class="container">
-        <h1>Get all sms offers</h1>
+        <div class="container">
+            <h1>Get All SMS Offers</h1>
 
-        
-        <label for="mobileInput">Enter a Mobile Number:</label>
-        <asp:TextBox ID="mobileNo" runat="server" CssClass="input-text" />
+            <label for="mobileInput">Enter a Mobile Number:</label>
+            <asp:TextBox ID="mobileNo" runat="server" CssClass="input-text" />
 
-        <asp:Button ID="SearchButton" runat="server" Text="Search" CssClass="btn" OnClick="SearchButton_Click" />
+            <asp:Button ID="SearchButton" runat="server" Text="Search" CssClass="btn" OnClick="SearchButton_Click" />
 
-        <div class="grid-container">
-        <asp:GridView ID="ResultGrid" runat="server" CssClass="gridview" Visible="true" />
+            <div class="grid-container">
+                <asp:GridView ID="ResultGrid" runat="server" CssClass="gridview" Visible="true" />
             </div>
 
-        <asp:Button ID="ReturnButton" runat="server" Text="Return to Dashboard" CssClass="btn" PostBackUrl="AdminDashboard.aspx" />
-    </div>
+            <asp:Button ID="ReturnButton" runat="server" Text="Return to Dashboard" CssClass="btn" PostBackUrl="AdminDashboard.aspx" />
+        </div>
     </form>
 </body>
 </html>
